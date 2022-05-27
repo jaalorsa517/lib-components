@@ -1,0 +1,7 @@
+node_modules
+index.html
+test/
+.gitignore
+lib/
+package-lock.json
+tsconfig.json
