@@ -27,7 +27,7 @@ export class Toggle extends Element {
     };
     this._render();
     this.addEventListener("click", this.onClick, false);
-    this._eventEmitter = new CustomEvent("onChange", { detail: { isChecked: this._checked } });
+    this._eventEmitter = new CustomEvent("change", { detail: { isChecked: this._checked } });
   }
   private _render() {
     const styletmp: HTMLStyleElement = document.createElement("style");
