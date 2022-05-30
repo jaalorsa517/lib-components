@@ -9,6 +9,11 @@ module.exports = defineConfig({
       name: "libComponents",
     },
   },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "lib"),
+    },
+  },
   plugins: [
     {
       ...typescript({ check: false }),

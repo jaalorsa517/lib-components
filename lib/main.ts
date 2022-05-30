@@ -1,4 +1,3 @@
-import Saludo from "./utils/Saludo";
-import Persona from "./utils/Persona";
+import { j5Toggle } from "./components/toggle/index";
 
-export { Persona, Saludo };
+export { j5Toggle };

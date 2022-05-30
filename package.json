@@ -1,5 +1,5 @@
 {
-  "name": "lib-components",
+  "name": "j5-components",
   "version": "0.0.0",
   "private": true,
   "description": "Libreria de componentes web para ayudar al desarrollador en su día a día. Como la librería está hecha en vanilla, se puede utilizar sin importar el framework de javascript.",
@@ -7,23 +7,23 @@
     "dist"
   ],
   "types": "./dist/main.d.ts",
-  "main": "./dist/lib-components.umd.js",
-  "module": "./dist/lib-components.es.js",
+  "main": "./dist/j5-components.umd.js",
+  "module": "./dist/j5-components.es.js",
   "exports": {
     ".": {
-      "import": "./dist/lib-components.es.js",
-      "require": "./dist/lib-components.umd.js"
+      "import": "./dist/j5-components.es.js",
+      "require": "./dist/j5-components.umd.js"
     }
   },
   "author": "jaalorsa517",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jaalorsa517/lib-components/issues"
+    "url": "https://github.com/jaalorsa517/j5-components/issues"
   },
-  "homepage": "https://github.com/jaalorsa517/lib-components#readme",
+  "homepage": "https://github.com/jaalorsa517/j5-components#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jaalorsa517/lib-components.git"
+    "url": "git+https://github.com/jaalorsa517/j5-components.git"
   },
   "keywords": [
     "webcomponents",
@@ -33,7 +33,7 @@
     "javascript"
   ],
   "scripts": {
-    "start": "vite",
+    "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
