@@ -136,3 +136,13 @@ Las característica que tiene la librería J5-Components son:
     <j5-toggle label="Inactivo/Activo"></j5-toggle>
     <j5-toggle label="Viajar"></j5-toggle>
     ```
+
+  #### Eventos
+
+  - **change:** Evento que envía el estado del toggle. La información del estado se envía dentro un objeto llamado `detail`, dentro se envía el valor `isChecked` con su respectivo estado.
+    ```javascript
+    const toggle = document.querySelector(".my-toggle");
+    toggle.addEventListener("change", (e) => {
+      console.log(e.detail); //{isChecked: true} || {ischecked: false}
+    });
+    ```
