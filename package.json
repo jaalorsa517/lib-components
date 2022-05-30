@@ -1,6 +1,6 @@
 {
   "name": "@jaalorsa/j5-components",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "description": "Libreria de componentes web para ayudar al desarrollador en su día a día. Como la librería está hecha en vanilla, se puede utilizar sin importar el framework de javascript.",
   "files": [
