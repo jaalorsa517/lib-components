@@ -1,5 +1,7 @@
 import { ToggleTemplate } from "./Toggle.tmpt";
 import { Element } from "../../shared/class/Element.cls";
+import { getType } from "../../shared/utils";
+import { Types } from "../../shared/enums";
 
 export class Toggle extends Element {
   static get observedAttributes() {
@@ -13,17 +15,12 @@ export class Toggle extends Element {
 
   constructor() {
     super();
-    this._checked = eval(this.getAttribute("checked") || "false");
+    this._checked = getType(this.getAttribute("checked") || "false", Types.BOOLEAN, this.shadowDOM);
     this._labelOptions = this._getOptionsLabel();
     this._templateCls = new ToggleTemplate(this._getLabel);
     this._attrs = {
-      checked: (newValue: string) => this._changeChecked(eval(newValue)),
-      label: (newValue: string) => {
-        const hasElements: boolean = newValue?.split("/").length === 2 || false;
-        if (hasElements && (this._labelOptions.length !== 2 || !this._labelOptions.every((value) => value)))
-          this._labelOptions = this._getOptionsLabel();
-        this._changeLabel(hasElements ? this._getLabel : newValue || "");
-      },
+      checked: (newValue: string) => this._changeChecked(getType(newValue, Types.BOOLEAN, this.shadowDOM)),
+      label: (newValue: string) => this._attrLabel(newValue),
     };
     this._render();
     this.addEventListener("click", this.onClick, false);
@@ -38,7 +35,7 @@ export class Toggle extends Element {
     this.shadowDOM.appendChild(document.importNode(body.content, true));
   }
   private onClick = () => {
-    this._checked = !eval(this.getAttribute("checked") || "false");
+    this._checked = !getType(this.getAttribute("checked") || "false", Types.BOOLEAN, this.shadowDOM);
     this.setAttribute("checked", `${this._checked}`);
     this.setAttribute("label", this._getLabel);
     this._eventEmitter.detail.isChecked = this._checked;
@@ -51,7 +48,9 @@ export class Toggle extends Element {
     return labelOptions;
   }
   private _changeChecked(value: boolean) {
-    const radio: HTMLInputElement | null = this.shadowDOM.querySelector(`.${this._templateCls.clsNames.radio}`);
+    const radio: HTMLInputElement | null = this.shadowDOM.querySelector(
+      `.${this._templateCls.clsNames.radio}`
+    );
     if (radio) {
       this._checked = value || false;
       radio.checked = value || false;
@@ -65,6 +64,13 @@ export class Toggle extends Element {
       labelEl.innerText = label;
     }
   }
+  private _attrLabel(newValue: string) {
+    const hasElements: boolean = newValue?.split("/").length === 2 || false;
+    if (hasElements && (this._labelOptions.length !== 2 || !this._labelOptions.every((value) => value)))
+      this._labelOptions = this._getOptionsLabel();
+    this._changeLabel(hasElements ? this._getLabel : newValue || "");
+  }
+
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     if (oldValue !== newValue) this._attrs[name](newValue);
   }
