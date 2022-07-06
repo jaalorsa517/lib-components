@@ -2,6 +2,7 @@ import { ToggleTemplate } from "./Toggle.tmpt";
 import { Element } from "../../shared/class/Element.cls";
 import { getType } from "../../shared/utils";
 import { Types } from "../../shared/enums";
+import { renderDom } from "lib/shared/utils";
 
 export class Toggle extends Element {
   static get observedAttributes() {
@@ -27,12 +28,7 @@ export class Toggle extends Element {
     this._eventEmitter = new CustomEvent("change", { detail: { isChecked: this._checked } });
   }
   private _render() {
-    const styletmp: HTMLStyleElement = document.createElement("style");
-    styletmp.textContent = this._templateCls.style;
-    this.shadowDOM.appendChild(styletmp);
-    const body: HTMLTemplateElement = document.createElement("template");
-    body.innerHTML = this._templateCls.template;
-    this.shadowDOM.appendChild(document.importNode(body.content, true));
+    renderDom(this);
   }
   private onClick = () => {
     this._checked = !getType(this.getAttribute("checked") || "false", Types.BOOLEAN, this.shadowDOM);
@@ -70,6 +66,9 @@ export class Toggle extends Element {
       this._labelOptions = this._getOptionsLabel();
     this._changeLabel(hasElements ? this._getLabel : newValue || "");
   }
+  private get _getLabel(): string {
+    return this._labelOptions[+this._checked];
+  }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     if (oldValue !== newValue) this._attrs[name](newValue);
@@ -82,8 +81,5 @@ export class Toggle extends Element {
   }
   disconnectedCallback() {
     this.removeEventListener("click", this.onClick);
-  }
-  private get _getLabel(): string {
-    return this._labelOptions[+this._checked];
   }
 }
