@@ -10,3 +10,12 @@ export function getType(value: string, type: Types, DOM: any): any {
   }
   return response || "";
 }
+
+export function renderDom(obj: any): void {
+  const styletmp: HTMLStyleElement = document.createElement("style");
+  styletmp.textContent = obj._templateCls.style;
+  obj.shadowDOM.appendChild(styletmp);
+  const body: HTMLTemplateElement = document.createElement("template");
+  body.innerHTML = obj._templateCls.template;
+  obj.shadowDOM.appendChild(document.importNode(body.content, true));
+}
