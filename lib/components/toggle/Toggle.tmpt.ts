@@ -1,12 +1,15 @@
 import { ToggleEnum } from "./Toggle.enum";
+import { IToggle } from "./IToggle";
+import { Template } from "../../shared/class/Template.cls";
 
-export class ToggleTemplate {
+export class ToggleTemplate extends Template {
   private _label: string;
-  private _clsNames;
+  private _clsNames: IToggle;
   private _template: string;
   private _style: string;
 
   constructor(label: string) {
+    super();
     this._label = label;
     this._clsNames = {
       root: ToggleEnum.tag,
@@ -22,7 +25,20 @@ export class ToggleTemplate {
         <span class="${this.clsNames.label}">${this._label}</span>
       </div>
       `;
-    this._style = `
+    this._style = this._getStyle();
+  }
+  get clsNames() {
+    return this._clsNames;
+  }
+  get template() {
+    return this._template;
+  }
+  get style() {
+    return this._style;
+  }
+
+  private _getStyle() {
+    return `
       ${this.clsNames.root},:host {
           width: fit-content;
           display:block;
@@ -92,14 +108,5 @@ export class ToggleTemplate {
           user-select: none;
         }
       `;
-  }
-  get clsNames() {
-    return this._clsNames;
-  }
-  get template() {
-    return this._template;
-  }
-  get style() {
-    return this._style;
   }
 }

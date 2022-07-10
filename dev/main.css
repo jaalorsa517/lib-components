@@ -1,0 +1,7 @@
+.container > j5-tooltip {
+  display: inline-block;
+}
+
+.tooltip {
+  /* overflow-wrap: normal; */
+}
