@@ -14,9 +14,10 @@ export class TooltipTemplate extends Template {
       container: `${TooltipEnum.tag}__container`,
       tooltip: `${TooltipEnum.tag}__tooltip`,
       tooltipNorte: `${TooltipEnum.tag}__tooltip--norte`,
-      tooltipEste: `${TooltipEnum.tag}__tooltip--este`,
-      tooltipSur: `${TooltipEnum.tag}__tooltip--sur`,
       tootipOeste: `${TooltipEnum.tag}__tooltip--oeste`,
+      tooltipSur: `${TooltipEnum.tag}__tooltip--sur`,
+      tooltipEste: `${TooltipEnum.tag}__tooltip--este`,
+      tooltipInOut: `${TooltipEnum.tag}__tooltip--in-out`,
     };
     this._template = this._getTemplate();
     this._style = this._getStyle();
@@ -37,7 +38,7 @@ export class TooltipTemplate extends Template {
         box-sizing: border-box;
         cursor:pointer;
         --border-width: 10px;
-        --background-color: #000;
+        --background-color: #2d302d;
         --border-transparent: transparent;
         --top:0;
         --left:0;
@@ -47,13 +48,15 @@ export class TooltipTemplate extends Template {
         --left-before: 20px;
         --bottom-before: 100%;
         --top-before: initial;
-        --max-width: unset;
+        --max-width: auto;
+        --min-width: auto;
         --width: auto;
         --height: auto;
-        --padding: 5px;
+        --padding: 8px;
         --fontFamily: initial;
-        --fontSize: 14px;
+        --fontSize: .875em;
         --fontColor: #fff;
+        --text-align: start;
       }
       .${this.clsNames.container} {
         position: relative;
@@ -62,6 +65,7 @@ export class TooltipTemplate extends Template {
         width: var(--width);
         height: var(--height);
         max-width: var(--max-width);
+        min-width: var(--min-width);
         padding: var(--padding);
         position: absolute;
         top: var(--top);
@@ -70,12 +74,18 @@ export class TooltipTemplate extends Template {
         right: var(--right);
         font-family: var(--fontFamily);
         font-size: var(--fontSize);
-        background-color: green;
-        /* background-color: var(--background-color); */
+        text-align: var(--text-align);
+        background-color: var(--background-color);
         border-radius: .5em;
         color: var(--fontColor);
         user-select: none;
         z-index: 1000;
+        opacity: 0;
+        transition: opacity .3s ease-in-out;
+        overflow-wrap: normal;
+      }
+      .${this.clsNames.tooltip}.${this.clsNames.tooltipInOut}{
+        opacity: 1;
       }
       .${this.clsNames.tooltip}::before{
         content: "";
@@ -88,28 +98,28 @@ export class TooltipTemplate extends Template {
         border-width: var(--border-width);
       }
       .${this.clsNames.tooltipNorte}::before {
-        border-top-color: var(--border-transparent);
-        border-bottom-color: var(--background-color);
-        border-left-color: var(--border-transparent);
-        border-right-color: var(--border-transparent);
-      }
-      .${this.clsNames.tooltipEste}::before {
-        border-top-color: var(--border-transparent);
-        border-left-color: var(--background-color);
-        border-bottom-color: var(--border-transparent);
-        border-right-color: var(--border-transparent);
-      }
-      .${this.clsNames.tooltipSur}::before {
         border-bottom-color: var(--border-transparent);
         border-top-color: var(--background-color);
         border-left-color: var(--border-transparent);
         border-right-color: var(--border-transparent);
       }
-      .${this.clsNames.tootipOeste}::before {
+      .${this.clsNames.tooltipEste}::before {
         border-bottom-color: var(--border-transparent);
         border-right-color: var(--background-color);
         border-top-color: var(--border-transparent);
         border-left-color: var(--border-transparent);
+      }
+      .${this.clsNames.tooltipSur}::before {
+        border-top-color: var(--border-transparent);
+        border-bottom-color: var(--background-color);
+        border-left-color: var(--border-transparent);
+        border-right-color: var(--border-transparent);
+      }
+      .${this.clsNames.tootipOeste}::before {
+        border-top-color: var(--border-transparent);
+        border-left-color: var(--background-color);
+        border-bottom-color: var(--border-transparent);
+        border-right-color: var(--border-transparent);
       }
       `;
   }
