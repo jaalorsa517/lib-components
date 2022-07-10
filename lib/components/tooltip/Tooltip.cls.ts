@@ -35,9 +35,12 @@ export class Tooltip extends Element {
     if (this._text) {
       const tooltip: HTMLDivElement = document.createElement("div");
       tooltip.innerHTML = this._text;
-      tooltip.className = `${this._templateCls.clsNames.tooltip}`;
+      tooltip.classList.add(`${this._templateCls.clsNames.tooltip}`);
       this.getElement(`.${this._templateCls.clsNames.container}`)?.appendChild(tooltip);
       this._positionObject[this._startPosition](tooltip);
+      setTimeout(() => {
+        tooltip.classList.add(`${this._templateCls.clsNames.tooltipInOut}`);
+      }, 0);
     }
   }
   private _onMouseOut() {
@@ -54,65 +57,64 @@ export class Tooltip extends Element {
     return "vertical";
   }
   private _horizontalOption(tooltip: HTMLDivElement) {
-    const { isLimitX, width, sizeBefore, isLimitY, paddingBottomTooltip, paddingTopTooltip } =
+    const { isLimitXRight, width, client, sizeBefore, isLimitYBottom, isLimitYTop } =
       this._getBoundingClientRect(tooltip);
-    if (isLimitX) {
-      tooltip.classList.add(`${this._templateCls.clsNames.tooltipEste}`);
-      tooltip.style.setProperty("--left", `initial`);
-      tooltip.style.setProperty("--right", `${width + this._gap}px`);
-      tooltip.style.setProperty("--left-before", "initial");
-      tooltip.style.setProperty("--right-before", `-${sizeBefore * 2}px`);
-    } else {
+    if (isLimitXRight) {
       tooltip.classList.add(`${this._templateCls.clsNames.tootipOeste}`);
-      tooltip.style.setProperty("--left", `${width + this._gap}px`);
-      tooltip.style.setProperty("--left-before", `-${sizeBefore * 2}px`);
+      this.style.setProperty("--left", `initial`);
+      this.style.setProperty("--right", `${width + this._gap}px`);
+      this.style.setProperty("--left-before", "initial");
+      this.style.setProperty("--right-before", `-${sizeBefore * 2}px`);
+    } else {
+      tooltip.classList.add(`${this._templateCls.clsNames.tooltipEste}`);
+      this.style.setProperty("--left", `${width + this._gap}px`);
+      this.style.setProperty("--left-before", `-${sizeBefore * 2}px`);
     }
 
-    if (isLimitY) {
-      tooltip.style.setProperty("--top", "initial");
-      tooltip.style.setProperty("--bottom", "0");
-      tooltip.style.setProperty("--bottom-before", `${5}px`);
-    } else {
-      tooltip.style.setProperty("--top", `${0}`);
-      tooltip.style.setProperty("--bottom-before", `initial`);
-      tooltip.style.setProperty("--top-before", `${5}px`);
+    if (isLimitYBottom) {
+      this.style.setProperty("--top", "initial");
+      this.style.setProperty("--bottom", `-${sizeBefore / 2}px`);
+      this.style.setProperty("--bottom-before", `${sizeBefore / 2}px`);
+      return;
     }
+    if (isLimitYTop) {
+      this.style.setProperty("--top", `-${sizeBefore / 2}px`);
+      this.style.setProperty("--bottom-before", `initial`);
+      this.style.setProperty("--top-before", `${sizeBefore / 2}px`);
+      return;
+    }
+    this.style.setProperty("--top", `calc(50% - ${client.heightTooltip / 2}px )`);
+    this.style.setProperty("--bottom-before", `initial`);
+    this.style.setProperty("--top-before", `calc(50% - ${sizeBefore}px)`);
   }
   private _verticalOption(tooltip: HTMLDivElement) {
-    const {
-      isLimitX,
-      isLimitY,
-      marginBottomTooltip,
-      marginTopTooltip,
-      height,
-      sizeBefore,
-      hasWidthMajorParent,
-      client,
-      paddingRightTooltip,
-    } = this._getBoundingClientRect(tooltip);
+    const { isLimitXRight, isLlimitXLeft, isLimitYBottom, height, sizeBefore, client } =
+      this._getBoundingClientRect(tooltip);
 
-    if (isLimitY) {
-      tooltip.classList.add(`${this._templateCls.clsNames.tooltipSur}`);
+    if (isLimitYBottom) {
+      tooltip.classList.add(`${this._templateCls.clsNames.tooltipNorte}`);
       this.style.setProperty("--top", "initial");
-      this.style.setProperty("--bottom", `${height - (marginTopTooltip + marginBottomTooltip)}px`);
+      this.style.setProperty("--bottom", `${height + sizeBefore / 2}px`);
       this.style.setProperty("--bottom-before", `-${sizeBefore * 2}px`);
     } else {
-      tooltip.classList.add(`${this._templateCls.clsNames.tooltipNorte}`);
-      this.style.setProperty("--top", `${height - (marginTopTooltip + marginBottomTooltip)}px`);
+      tooltip.classList.add(`${this._templateCls.clsNames.tooltipSur}`);
+      this.style.setProperty("--top", `${height + sizeBefore / 2}px`);
     }
-    if (isLimitX) {
+    if (isLimitXRight) {
       this.style.setProperty("--left", `initial`);
       this.style.setProperty("--right", `0`);
-    }
-    if (hasWidthMajorParent && isLimitX) {
       this.style.setProperty("--left-before", `initial`);
-      this.style.setProperty("--right-before", `${5}px`);
+      this.style.setProperty("--right-before", `${sizeBefore / 2}px`);
       return;
     }
-    if (!hasWidthMajorParent) {
-      this.style.setProperty("--left-before", `5px`);
+    if (isLlimitXLeft) {
+      this.style.setProperty("--left", "0");
+      this.style.setProperty("--left-before", `${sizeBefore / 2}px`);
       return;
     }
+    this.style.setProperty("--left", `calc(50% - ${client.widthTooltip / 2}px)`);
+    this.style.setProperty("--left-before", `calc(50% - ${sizeBefore}px)`);
+    return;
   }
   private _getBoundingClientRect(element: HTMLDivElement) {
     const client = { widthTooltip: element.clientWidth, heightTooltip: element.clientHeight };
@@ -120,32 +122,22 @@ export class Tooltip extends Element {
     const heightDocument = document.documentElement.clientHeight;
     const widthDocument = document.documentElement.clientWidth;
     const boundingClient = {
+      paddingTopTooltip: Number(window.getComputedStyle(this).getPropertyValue("padding-top").split("px")[0]),
       paddingBottomTooltip: Number(
-        window.getComputedStyle(element).getPropertyValue("padding-bottom").split("px")[0]
-      ),
-      paddingTopTooltip: Number(
-        window.getComputedStyle(element).getPropertyValue("padding-top").split("px")[0]
-      ),
-      paddingRightTooltip: Number(
-        window.getComputedStyle(element).getPropertyValue("padding-left").split("px")[0]
-      ),
-      marginTopTooltip: Number(
-        window.getComputedStyle(element).getPropertyValue("margin-top").split("px")[0]
-      ),
-      marginBottomTooltip: Number(
-        window.getComputedStyle(element).getPropertyValue("margin-bottom").split("px")[0]
+        window.getComputedStyle(this).getPropertyValue("padding-bottom").split("px")[0]
       ),
       sizeBefore: Number(window.getComputedStyle(element).getPropertyValue("--border-width").split("px")[0]),
-      isLimitY: y + height + client.heightTooltip > heightDocument - height,
-      isLimitX: x + width + client.widthTooltip > widthDocument - width,
-      hasWidthMajorParent: client.widthTooltip > width,
+      isLimitYTop: client.heightTooltip >= y,
+      isLimitYBottom: y + height + client.heightTooltip / 2 > heightDocument - height,
+      isLimitXRight: x + width + client.widthTooltip / 2 > widthDocument - width,
+      isLlimitXLeft: client.widthTooltip / 2 >= x,
     };
     return {
       client,
       x,
       width,
       y,
-      height,
+      height: height - (boundingClient.paddingTopTooltip + boundingClient.paddingBottomTooltip),
       ...boundingClient,
     };
   }

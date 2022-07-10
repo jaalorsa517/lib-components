@@ -6,4 +6,5 @@ export interface ITooltip extends ClassNames {
   tootipOeste: string;
   tooltipSur: string;
   tooltipEste: string;
+  tooltipInOut: string;
 }
