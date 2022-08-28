@@ -255,9 +255,3 @@ Transición tooltip: `j5-tooltip__tooltip--in-out`,
   ```
 
 </details>
-
-<style>
-  .detail .toggle-head{
-    display: inline;
-  }
-</style>
