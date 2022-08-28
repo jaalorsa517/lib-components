@@ -8,10 +8,9 @@
   ],
   "types": "./dist/main.d.ts",
   "main": "./dist/j5-components.umd.js",
-  "module": "./dist/j5-components.es.js",
   "exports": {
     ".": {
-      "import": "./dist/j5-components.es.js",
+      "import": "./dist/j5-components.mjs",
       "require": "./dist/j5-components.umd.js"
     }
   },
