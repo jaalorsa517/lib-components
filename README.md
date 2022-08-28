@@ -54,8 +54,8 @@ Las característica que tiene la librería J5-Components son:
 
 ## Componentes
 
-<details>
-<summary><h3 style="display:inline;"> j5-toggle: Toggle </h3> </summary>
+<details class="detail">
+<summary><h3 class="toggle-head" style="display:inline;"> j5-toggle: Toggle </h3> </summary>
 
 #### Instrucciones
 
@@ -143,8 +143,8 @@ Label: `j5-toggle__label`,
 - **change:** Evento que envía el estado del toggle. La información del estado se envía dentro un objeto llamado `detail`, dentro se envía el valor `isChecked` con su respectivo estado. `javascript const toggle = document.querySelector(".my-toggle"); toggle.addEventListener("change", (e) => { console.log(e.detail); //{isChecked: true} || {ischecked: false} }); `
 
 </details>
-<details>
-<summary><h3 style="display:inline;"> j5-tooltip: Tooltip </h3> </summary>
+<details class="detail">
+<summary><h3 class="toggle-head" style="display:inline;"> j5-tooltip: Tooltip </h3> </summary>
 
 #### Instrucciones
 
@@ -255,3 +255,9 @@ Transición tooltip: `j5-tooltip__tooltip--in-out`,
   ```
 
 </details>
+
+<style>
+  .detail .toggle-head{
+    display: inline;
+  }
+</style>
