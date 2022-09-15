@@ -1,8 +1,9 @@
 import { ToggleTemplate } from "./Toggle.tmpt";
-import { Element } from "../../shared/class/Element.cls";
-import { getType } from "../../shared/utils";
-import { Types } from "../../shared/enums";
+import { Element } from "lib/shared/class/Element.cls";
+import { getType } from "lib/shared/utils";
+import { Types } from "lib/shared/enums";
 import { renderDom } from "lib/shared/utils";
+import { ISwitchObject } from "lib/shared/interfaces";
 
 export class Toggle extends Element {
   static get observedAttributes() {
@@ -12,23 +13,26 @@ export class Toggle extends Element {
   private _eventEmitter: CustomEvent;
   private _templateCls: ToggleTemplate;
   private _labelOptions: string[] = [];
-  private _attrs: { [key: string]: (a: string) => void };
+  private _attrs: ISwitchObject;
 
   constructor() {
     super();
     this._checked = getType(this.getAttribute("checked") || "false", Types.BOOLEAN, this.shadowDOM);
     this._labelOptions = this._getOptionsLabel();
     this._templateCls = new ToggleTemplate(this._getLabel);
-    this._attrs = {
-      checked: (newValue: string) => this._changeChecked(getType(newValue, Types.BOOLEAN, this.shadowDOM)),
-      label: (newValue: string) => this._attrLabel(newValue),
-    };
+    this._attrs = this._getLogicAttr();
     this._render();
     this.addEventListener("click", this.onClick, false);
     this._eventEmitter = new CustomEvent("change", { detail: { isChecked: this._checked } });
   }
   private _render() {
     renderDom(this);
+  }
+  private _getLogicAttr(): ISwitchObject {
+    return {
+      checked: (newValue: string) => this._changeChecked(getType(newValue, Types.BOOLEAN, this.shadowDOM)),
+      label: (newValue: string) => this._attrLabel(newValue),
+    };
   }
   private onClick = () => {
     this._checked = !getType(this.getAttribute("checked") || "false", Types.BOOLEAN, this.shadowDOM);

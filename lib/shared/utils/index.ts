@@ -1,5 +1,5 @@
-import { Types } from "../enums";
-import { typesOption } from "../dictionaries";
+import { Types } from "lib/shared/enums";
+import { typesOption } from "lib/shared/dictionaries";
 
 export function getType(value: string, type: Types, DOM: any): any {
   let response: any;
