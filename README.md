@@ -136,11 +136,18 @@ Label: `j5-toggle__label`,
   <!-- Cuando sea Verdadero, mostrará Activo -->
   <j5-toggle label="Inactivo/Activo"></j5-toggle>
   <j5-toggle label="Viajar"></j5-toggle>
+  ****
   ```
 
 #### Eventos
 
-- **change:** Evento que envía el estado del toggle. La información del estado se envía dentro un objeto llamado `detail`, dentro se envía el valor `isChecked` con su respectivo estado. `javascript const toggle = document.querySelector(".my-toggle"); toggle.addEventListener("change", (e) => { console.log(e.detail); //{isChecked: true} || {ischecked: false} }); `
+- **change:** Evento que envía el estado del toggle. La información del estado se envía dentro un objeto llamado `detail`, dentro se envía el valor `isChecked` con su respectivo estado.
+  ```javascript
+  const toggle = document.querySelector(".my-toggle");
+  toggle.addEventListener("change", (e) => {
+    console.log(e.detail); //{isChecked: true} || {ischecked: false}
+  });
+  ```
 
 </details>
 <details class="detail">
@@ -252,6 +259,93 @@ Transición tooltip: `j5-tooltip__tooltip--in-out`,
   <j5-tooltip class="tres" text="Probando un texto mediano para el tooltip." startposition="horizontal">
     <a href="#">Hello a element with display inline</a>
   </j5-tooltip>
+  ```
+
+</details>
+<details class="detail">
+<summary><h3 class="toggle-head" style="display:inline;"> j5-menu-hamburguer: Menú hamburguesa </h3> </summary>
+
+#### Instrucciones
+
+En el html se usa la etiqueta `j5-menu-hamburguer`
+
+```html
+<j5-menu-hamburguer>
+  <h1>Esto es una prueba</h1>
+</j5-menu-hamburguer>
+```
+
+En el archivo de entrada Js se importa la librería y se ejecuta la función **j5MenuHamburguer**.
+
+```javascript
+// main.js
+// Importar la librería y seleccionar j5MenuHamburguer
+import { j5MenuHamburguer } from "@jaalorsa/j5-components";
+// Iniciar el componente al ejecutar la función
+j5MenuHamburguer();
+```
+
+#### Valores por defecto
+
+Se encuentra en el selector CSS de etiqueta `j5-menu-hamburguer`
+
+```css
+j5-menu-hamburguer {
+  display: block;
+  font-size: 10px;
+  --color: #215376;
+  --colorActive: #215376;
+  --menuPositionTop: 0;
+  --menuPositionRight: ${this._getRight()};
+  --menuPositionLeft: ${this._getLeft()};
+  --menuBackground: #fff;
+  --menuWidth: 100vw;
+  --menuHeight: 100vh;
+  --menuZIndex: 1000;
+}
+```
+Para controlar el **tamaño** del menu (ícono) se hace a través del atributo `font-size` de css.
+
+#### Nombre de las clases de los elementos internos
+
+```javascript
+Componente: `j5-menu-hamburguer`,
+Contenedor: `j5-menu-hamburguer__container`,
+menu: `j5-menu-hamburguer__menu`,
+linea: `j5-menu-hamburguer__line`,
+inea Uno: `j5-menu-hamburguer__line--uno`,
+linea Dos: `j5-menu-hamburguer__line--dos`,
+linea Tres: `j5-menu-hamburguer__line--tres`,
+Contenedor del slot: `j5-menu-hamburguer__containerChild`
+```
+
+#### Atributos
+
+- **in-out [string]:** Atributo para indicar la animación, estilo transición. Funciona igual que la propiedad `transition` de css. El valor por default es `opacity 600ms`
+
+  ```html
+  <j5-menu-hamburguer>
+    <h1>Default es opacity 600ms</h1>
+  </j5-menu-hamburguer>
+  <j5-menu-hamburguer in-out="2s">
+    <h1>transition: opacity 2000ms</h1>
+  </j5-menu-hamburguer>
+  <j5-menu-hamburguer in-out="left">
+    <h1>transition: left 600ms</h1>
+  </j5-menu-hamburguer>
+  <j5-menu-hamburguer in-out="right 1s ease-out">
+    <h1>transition: rigth 1000ms ease-out</h1>
+  </j5-menu-hamburguer>
+  ```
+
+#### Eventos
+
+- **isOpen:** Evento que envía el estado del menú, abierto o cerrado. La información del estado se envía dentro un objeto llamado `detail`, dentro se envía el valor `isOpen` con su respectivo estado.
+  ```javascript
+  const menu = document.querySelector("j5-menu-hamburguer");
+  menu.addEventListener("isOpen", (e) => {
+    console.log(e.detail); //{isOpen: true} || {isOpen: false} 
+  });
   ```
 
 </details>

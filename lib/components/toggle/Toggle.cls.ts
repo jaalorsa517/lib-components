@@ -34,7 +34,8 @@ export class Toggle extends Element {
       label: (newValue: string) => this._attrLabel(newValue),
     };
   }
-  private onClick = () => {
+  private onClick = (e: MouseEvent) => {
+    e.preventDefault();
     this._checked = !getType(this.getAttribute("checked") || "false", Types.BOOLEAN, this.shadowDOM);
     this.setAttribute("checked", `${this._checked}`);
     this.setAttribute("label", this._getLabel);

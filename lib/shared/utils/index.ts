@@ -17,5 +17,6 @@ export function renderDom(obj: any): void {
   obj.shadowDOM.appendChild(styletmp);
   const body: HTMLTemplateElement = document.createElement("template");
   body.innerHTML = obj._templateCls.template;
-  obj.shadowDOM.appendChild(document.importNode(body.content, true));
+  obj.shadowDOM.append(body.content);
 }
+

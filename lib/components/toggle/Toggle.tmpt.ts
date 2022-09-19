@@ -51,6 +51,7 @@ export class ToggleTemplate extends Template {
           width: fit-content;
           display:block;
           font-size: 10px;
+          box-sizing: border-box;
           --backWidth: 6em;
           --backHeight: 3em;
           --backColorActive: green;
@@ -61,7 +62,6 @@ export class ToggleTemplate extends Template {
           --labelColor: darkgray;
           --labelFont: sans-serif;
           --borderRadius: 10em;
-          box-sizing: border-box;
         }
         .${this.clsNames.container}{
           display: flex;
