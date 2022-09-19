@@ -1,7 +1,16 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .container > j5-tooltip {
   display: inline-block;
 }
 
-.tooltip {
-  /* overflow-wrap: normal; */
+header{
+  width: 100vw;
+  display: flex;
+  justify-content: flex-end;
+  border: 1px solid #215673;
 }

@@ -1,6 +1,6 @@
 import { ToggleEnum } from "./Toggle.enum";
 import { IToggle } from "./IToggle";
-import { Template } from "../../shared/class/Template.cls";
+import { Template } from "lib/shared/class/Template.cls";
 
 export class ToggleTemplate extends Template {
   private _label: string;
@@ -11,38 +11,47 @@ export class ToggleTemplate extends Template {
   constructor(label: string) {
     super();
     this._label = label;
-    this._clsNames = {
+    this._clsNames = this._getClsNames();
+    this._template = this._getTemplate();
+    this._style = this._getStyle();
+  }
+  get clsNames(): IToggle {
+    return this._clsNames;
+  }
+  get template(): string {
+    return this._template;
+  }
+  get style(): string {
+    return this._style;
+  }
+
+  private _getClsNames(): IToggle {
+    return {
       root: ToggleEnum.tag,
       container: `${ToggleEnum.tag}__container`,
       radio: `${ToggleEnum.tag}__radio`,
       switch: `${ToggleEnum.tag}__switch`,
       label: `${ToggleEnum.tag}__label`,
     };
-    this._template = `
+  }
+
+  private _getTemplate(): string {
+    return `
       <div class="${this.clsNames.container}">
         <input class="${this.clsNames.radio}" type="radio" />
         <div class="${this.clsNames.switch}"></div>
         <span class="${this.clsNames.label}">${this._label}</span>
       </div>
       `;
-    this._style = this._getStyle();
-  }
-  get clsNames() {
-    return this._clsNames;
-  }
-  get template() {
-    return this._template;
-  }
-  get style() {
-    return this._style;
   }
 
-  private _getStyle() {
+  private _getStyle(): string {
     return `
       ${this.clsNames.root},:host {
           width: fit-content;
           display:block;
           font-size: 10px;
+          box-sizing: border-box;
           --backWidth: 6em;
           --backHeight: 3em;
           --backColorActive: green;
@@ -53,7 +62,6 @@ export class ToggleTemplate extends Template {
           --labelColor: darkgray;
           --labelFont: sans-serif;
           --borderRadius: 10em;
-          box-sizing: border-box;
         }
         .${this.clsNames.container}{
           display: flex;

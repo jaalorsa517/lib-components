@@ -1,6 +1,6 @@
 const path = require("path");
 const { defineConfig } = require("vite");
-import typescript from "rollup-plugin-typescript2";
+import vite_d_ts from "vite-plugin-dts";
 
 module.exports = defineConfig({
   build: {
@@ -12,11 +12,8 @@ module.exports = defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "lib"),
+      lib: path.resolve(__dirname, "lib"),
     },
   },
-  plugins: [
-    {
-      ...typescript({ check: false }),
-    },
-  ],
+  plugins: [vite_d_ts()],
 });

@@ -1,5 +1,5 @@
-import { Types } from "../enums";
-import { typesOption } from "../dictionaries";
+import { Types } from "lib/shared/enums";
+import { typesOption } from "lib/shared/dictionaries";
 
 export function getType(value: string, type: Types, DOM: any): any {
   let response: any;
@@ -17,5 +17,6 @@ export function renderDom(obj: any): void {
   obj.shadowDOM.appendChild(styletmp);
   const body: HTMLTemplateElement = document.createElement("template");
   body.innerHTML = obj._templateCls.template;
-  obj.shadowDOM.appendChild(document.importNode(body.content, true));
+  obj.shadowDOM.append(body.content);
 }
+

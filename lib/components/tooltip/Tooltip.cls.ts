@@ -1,6 +1,7 @@
 import { TooltipTemplate } from "./Tooltip.tmpt";
-import { Element } from "../../shared/class/Element.cls";
+import { Element } from "lib/shared/class/Element.cls";
 import { renderDom } from "lib/shared/utils";
+import { ISwitchObject } from "lib/shared/interfaces";
 
 export class Tooltip extends Element {
   static get observedAttributes() {
@@ -11,8 +12,8 @@ export class Tooltip extends Element {
   private _text: string;
   private _startPosition: "vertical" | "horizontal";
   private _gap: number = 20;
-  private _attrs: { [key: string]: (a: string) => void };
-  private _positionObject: { [key: string]: (v: HTMLDivElement) => void } = {
+  private _attrs: ISwitchObject;
+  private _positionObject: ISwitchObject<HTMLDivElement> = {
     vertical: this._verticalOption.bind(this),
     horizontal: this._horizontalOption.bind(this),
   };
@@ -22,14 +23,17 @@ export class Tooltip extends Element {
     this._templateCls = new TooltipTemplate();
     this._text = this.getAttribute("text") || "";
     this._startPosition = this._evaluateStartPosition(this.getAttribute("startposition"));
-    this._attrs = {
-      text: (newValue: string) => (this._text = newValue),
-      startposition: (newValue: string) => (this._startPosition = this._evaluateStartPosition(newValue)),
-    };
+    this._attrs = this._getAttrs();
     this._render();
   }
   private _render() {
     renderDom(this);
+  }
+  private _getAttrs(): ISwitchObject {
+    return {
+      text: (newValue: string) => (this._text = newValue),
+      startposition: (newValue: string) => (this._startPosition = this._evaluateStartPosition(newValue)),
+    };
   }
   private _onMouseIn() {
     if (this._text) {

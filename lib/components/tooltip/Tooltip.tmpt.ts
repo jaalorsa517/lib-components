@@ -1,6 +1,6 @@
 import { TooltipEnum } from "./Tooltip.enum";
 import { ITooltip } from "./ITooltip";
-import { Template } from "../../shared/class/Template.cls";
+import { Template } from "lib/shared/class/Template.cls";
 
 export class TooltipTemplate extends Template {
   private _clsNames: ITooltip;
@@ -9,7 +9,12 @@ export class TooltipTemplate extends Template {
 
   constructor() {
     super();
-    this._clsNames = {
+    this._clsNames = this._getClassNames();
+    this._template = this._getTemplate();
+    this._style = this._getStyle();
+  }
+  private _getClassNames() {
+    return {
       root: TooltipEnum.tag,
       container: `${TooltipEnum.tag}__container`,
       tooltip: `${TooltipEnum.tag}__tooltip`,
@@ -19,8 +24,6 @@ export class TooltipTemplate extends Template {
       tooltipEste: `${TooltipEnum.tag}__tooltip--este`,
       tooltipInOut: `${TooltipEnum.tag}__tooltip--in-out`,
     };
-    this._template = this._getTemplate();
-    this._style = this._getStyle();
   }
   private _getTemplate() {
     return `
