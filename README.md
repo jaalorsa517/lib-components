@@ -304,6 +304,7 @@ j5-menu-hamburguer {
   --menuZIndex: 1000;
 }
 ```
+
 Para controlar el **tamaño** del menu (ícono) se hace a través del atributo `font-size` de css.
 
 #### Nombre de las clases de los elementos internos
@@ -344,8 +345,63 @@ Contenedor del slot: `j5-menu-hamburguer__containerChild`
   ```javascript
   const menu = document.querySelector("j5-menu-hamburguer");
   menu.addEventListener("isOpen", (e) => {
-    console.log(e.detail); //{isOpen: true} || {isOpen: false} 
+    console.log(e.detail); //{isOpen: true} || {isOpen: false}
   });
   ```
 
 </details>
+
+<details class="detail">
+<summary><h3 class="json-head" style="display:inline;"> j5-json-transform: Formatear JSON </h3> </summary>
+
+#### Instrucciones
+
+En el html se usa la etiqueta `j5-json-transform`
+
+```html
+<j5-json-transform></j5-json-transform>
+```
+
+En el archivo de entrada Js se importa la librería y se ejecuta la función **j5JsonTransform**.
+
+```javascript
+// main.js
+// Importar la librería y seleccionar j5JsonTransform
+import { j5JsonTransform } from "@jaalorsa/j5-components";
+// Iniciar el componente al ejecutar la función
+j5JsonTransform();
+```
+
+#### Valores por defecto
+
+Se encuentra en el selector CSS de etiqueta `j5-menu-hamburguer`
+
+```css
+j5-menu-hamburguer {
+  display: block;
+  --width: 600px;
+  --height: 300px;
+  --color_primary: #438C40;
+  --color_font: #112e09;
+  --color_font_light: #f9f9f9;
+  --color_popup: var(--color_font);
+  --color_popup_font: var(--color_font_light);
+  --font-size: 1em;
+  --font-family: "Roboto", sans-serif;
+  --line-height: 1.5;
+}
+```
+
+#### Nombre de las clases de los elementos internos
+
+```javascript
+  "root": "j5-json-transform",
+  "container": "j5-json-transform__container",
+  "textArea": "j5-json-transform__textArea",
+  "btnContainer": "j5-json-transform__btnContainer",
+  "btn": "j5-json-transform__btn",
+  "btnCopy": "j5-json-transform__btn--copy",
+  "btnClear": "j5-json-transform__btn--clear",
+  "popup": "j5-json-transform__popup"
+</details>
+```

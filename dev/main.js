@@ -1,8 +1,9 @@
-import { j5Toggle, j5Tooltip, j5MenuHamburguer } from "lib/main";
+import { j5Toggle, j5Tooltip, j5MenuHamburguer, j5JsonTransform } from "lib/main";
 
 j5Toggle();
 j5Tooltip();
 j5MenuHamburguer();
+j5JsonTransform();
 
 const randomMinMax = (min = 0, max = 1) => Math.floor(Math.random() * (max - min + 1)) + min;
 
