@@ -374,13 +374,14 @@ j5JsonTransform();
 
 #### Valores por defecto
 
-Se encuentra en el selector CSS de etiqueta `j5-menu-hamburguer`
+Se encuentra en el selector CSS de etiqueta `j5-json-transform`
 
 ```css
-j5-menu-hamburguer {
+j5-json-transform {
   display: block;
-  --width: 600px;
-  --height: 300px;
+  position: relative;
+  width: 500px;
+  height: 500px;
   --color_primary: #438C40;
   --color_font: #112e09;
   --color_font_light: #f9f9f9;
@@ -402,6 +403,7 @@ j5-menu-hamburguer {
   "btn": "j5-json-transform__btn",
   "btnCopy": "j5-json-transform__btn--copy",
   "btnClear": "j5-json-transform__btn--clear",
-  "popup": "j5-json-transform__popup"
+  "popup": "j5-json-transform__popup",
+  "textAreaContainer": "j5-json-transform__textAreaContainer"
 </details>
 ```

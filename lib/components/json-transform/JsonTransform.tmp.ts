@@ -34,13 +34,16 @@ export class JsonTransformTemplate extends Template {
       btnCopy: `${JsonTransformEnum.tag}__btn--copy`,
       btnClear: `${JsonTransformEnum.tag}__btn--clear`,
       popup: `${JsonTransformEnum.tag}__popup`,
+      textAreaContainer: `${JsonTransformEnum.tag}__textAreaContainer`,
     };
   }
 
   private _getTemplate(): string {
     return `
       <div class="${this._clsNames.container}">
-        <textarea class="${this._clsNames.textArea}"></textarea>
+        <div class="${this._clsNames.textAreaContainer}">
+          <textarea  rea class="${this._clsNames.textArea}"></textarea>
+        </div>
         <div class="${this._clsNames.btnContainer}">
           <button class="${this._clsNames.btn} ${this._clsNames.btnCopy}">Copiar</button>
           <button class="${this._clsNames.btn} ${this._clsNames.btnClear}">Limpiar</button>
@@ -53,8 +56,9 @@ export class JsonTransformTemplate extends Template {
     return `
       ${this._clsNames.root}, :host{
         display: block;
-        --width: 600px;
-        --height: 300px;
+        position: relative;
+        width: 500px;
+        height: 500px;
         --color_primary: #438C40;
         --color_font: #112e09;
         --color_font_light: #f9f9f9;
@@ -65,12 +69,16 @@ export class JsonTransformTemplate extends Template {
         --line-height: 1.5;
       }
       .${this._clsNames.container}{
-        width: var(--width);
-        height: var(--height);
-      }
-      .${this._clsNames.textArea} {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         width: 100%;
         height: 100%;
+      }
+      .${this._clsNames.textArea} {
+        width: 90%;
+        height: 95%;
         padding: 0.5em;
         color: var(--color_font);
         font-size: var(--font-size);
@@ -88,11 +96,19 @@ export class JsonTransformTemplate extends Template {
       .${this._clsNames.textArea}::-webkit-scrollbar {
         width: 1px;
       }
-      .${this._clsNames.btnContainer} {
+      .${this._clsNames.textAreaContainer} {
+        flex: 10;
+      }
+      .${this._clsNames.btnContainer}{
+        flex: 1;
+      }
+      .${this._clsNames.btnContainer},
+      .${this._clsNames.textAreaContainer} {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 0.5em 0;
+        width: 100%;
+        height: 100%;
       }
       .${this._clsNames.btn} {
         padding: .1875em .3125em;
