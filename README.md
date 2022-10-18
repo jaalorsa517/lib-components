@@ -382,7 +382,7 @@ j5-json-transform {
   position: relative;
   width: 500px;
   height: 500px;
-  --color_primary: #438C40;
+  --color_primary: #438c40;
   --color_font: #112e09;
   --color_font_light: #f9f9f9;
   --color_popup: var(--color_font);
@@ -405,5 +405,80 @@ j5-json-transform {
   "btnClear": "j5-json-transform__btn--clear",
   "popup": "j5-json-transform__popup",
   "textAreaContainer": "j5-json-transform__textAreaContainer"
-</details>
 ```
+
+</details>
+
+<details class="detail">
+<summary><h3 class="json-head" style="display:inline;"> j5-carousel: Carousel (Slider) </h3> </summary>
+
+#### Instrucciones
+
+En el html se usa la etiqueta `j5-carousel`
+
+```html
+<j5-carousel></j5-carousel>
+```
+
+En el archivo de entrada Js se importa la librería y se ejecuta la función **j5Carousel**.
+
+```javascript
+// main.js
+// Importar la librería y seleccionar j5Carousel
+import { j5Carousel } from "@jaalorsa/j5-components";
+// Iniciar el componente al ejecutar la función
+j5Carousel();
+```
+
+#### Valores por defecto
+
+Se encuentra en el selector CSS de etiqueta `j5-carousel`
+
+```css
+j5-carousel {
+  display: block;
+  width: fit-content;
+  font-size: 16px;
+  --color_back_arrows: #000;
+  --color_icon: #fff;
+  --size_arrows: 1.5em;
+  --size_icon: 1.5em;
+}
+```
+
+#### Nombre de las clases de los elementos internos
+
+```javascript
+  "root": "j5-carousel",
+  "container": "j5-carousel__container",
+  "arrow": "j5-carousel__arrow",
+  "arrowLeft": "j5-carousel__arrow--left",
+  "arrowRight": "j5-carousel__arrow--right",
+  "slides": "j5-carousel__slides",
+  "slot": "j5-carousel__slot"
+```
+
+#### Atributos
+
+- **count-slides [number]:** La cantidad máxima de elementos visualizados. Por defecto, es 3. **Nota:** Es importante aclarar que el ancho asignado al web component, afecta este comportamiento.
+  ```html
+  <j5-carousel count-slides="2">
+    <div class="item"><span>1</span></div>
+    <div class="item"><span>2</span></div>
+    <div class="item"><span>3</span></div>
+    <div class="item"><span>4</span></div>
+    <div class="item"><span>5</span></div>
+    <div class="item"><span>6</span></div>
+  </j5-carousel>
+  ```
+- **transition-auto[number]:** Activar la transición automática del slider; si no se añade el atributo, la transición automática no se activará. Recibe un número que representa los milisegundos para hacer la transición. **Nota:** Este es una atributo no reactivo, por lo que no se puede reasignar luego de que el componente se monta en el DOM.
+  ```html
+  <j5-carousel transition-auto="5000">
+    <div class="item"><span>1</span></div>
+    <div class="item"><span>2</span></div>
+    <div class="item"><span>3</span></div>
+    <div class="item"><span>4</span></div>
+    <div class="item"><span>5</span></div>
+    <div class="item"><span>6</span></div>
+  </j5-carousel>
+  ```

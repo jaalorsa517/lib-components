@@ -2,5 +2,6 @@ import { j5Toggle } from "lib/components/toggle";
 import { j5Tooltip } from "lib/components/tooltip";
 import { j5MenuHamburguer } from "lib/components/menu-hamburguer";
 import { j5JsonTransform } from "lib/components/json-transform";
+import { j5Carousel } from "lib/components/carousel";
 
-export { j5Toggle, j5Tooltip, j5MenuHamburguer, j5JsonTransform };
+export { j5Toggle, j5Tooltip, j5MenuHamburguer, j5JsonTransform, j5Carousel };

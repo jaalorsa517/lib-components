@@ -15,6 +15,25 @@ header{
   border: 1px solid #215673;
 }
 
-.container {
-  
+j5-carousel{
+  margin:auto;
+}
+
+.item{
+  width: 4em;
+  height: 8em;
+  margin: 0 1em;
+  padding: 0 1em;
+  border: 2px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  background-color: bisque;
+  text-align: center;
+  font-size: 2em;
+}
+
+.item:nth-child(2n+1){
+  background-color: #215673;
 }
