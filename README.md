@@ -356,7 +356,7 @@ Contenedor del slot: `j5-menu-hamburguer__containerChild`
 
 #### Instrucciones
 
-En el html se usa la etiqueta `j5-json-transform`
+En el html se usa la etiqueta `j5-json-transform`. Este es un componente que no usa el Shadow DOM, por lo tanto, se puede asignar estilos desde el proyecto padre. Para eso, hay que tener claro el [concepto de específicidad](https://youtu.be/c3-fse8KPVo), ya que los estilos del web component se montan luego de cargar el DOM.
 
 ```html
 <j5-json-transform></j5-json-transform>
@@ -382,7 +382,7 @@ j5-json-transform {
   position: relative;
   width: 500px;
   height: 500px;
-  --color_primary: #438C40;
+  --color_primary: #438c40;
   --color_font: #112e09;
   --color_font_light: #f9f9f9;
   --color_popup: var(--color_font);
@@ -390,6 +390,7 @@ j5-json-transform {
   --font-size: 1em;
   --font-family: "Roboto", sans-serif;
   --line-height: 1.5;
+  --color_error: #bb0000;
 }
 ```
 
@@ -399,11 +400,14 @@ j5-json-transform {
   "root": "j5-json-transform",
   "container": "j5-json-transform__container",
   "textArea": "j5-json-transform__textArea",
+  "textAreaError": "j5-json-transform__textArea--error",
   "btnContainer": "j5-json-transform__btnContainer",
   "btn": "j5-json-transform__btn",
   "btnCopy": "j5-json-transform__btn--copy",
   "btnClear": "j5-json-transform__btn--clear",
+  "btnFormat": "j5-json-transform__btn--format",
   "popup": "j5-json-transform__popup",
-  "textAreaContainer": "j5-json-transform__textAreaContainer"
+  "textAreaContainer": "j5-json-transform__textAreaContainer",
+  "errorInput": "j5-json-transform__error"
 </details>
 ```

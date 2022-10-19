@@ -4,3 +4,7 @@ export enum Types {
   BOOLEAN = "boolean",
   OBJECT = "object",
 }
+export enum Validates {
+  ERROR = "error",
+  VALIDATE = "validate",
+}

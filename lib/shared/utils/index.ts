@@ -20,3 +20,12 @@ export function renderDom(obj: any): void {
   obj.shadowDOM.append(body.content);
 }
 
+export function renderDomOpen(obj: any): void {
+  const styletmp: HTMLStyleElement = document.createElement("style");
+  styletmp.textContent = obj._templateCls.style;
+  document.head.appendChild(styletmp);
+  const body: HTMLTemplateElement = document.createElement("template");
+  body.innerHTML = obj._templateCls.template;
+  obj.append(body.content);
+}
+

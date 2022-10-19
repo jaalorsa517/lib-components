@@ -29,12 +29,15 @@ export class JsonTransformTemplate extends Template {
       root: JsonTransformEnum.tag,
       container: `${JsonTransformEnum.tag}__container`,
       textArea: `${JsonTransformEnum.tag}__textArea`,
+      textAreaError: `${JsonTransformEnum.tag}__textArea--error`,
       btnContainer: `${JsonTransformEnum.tag}__btnContainer`,
       btn: `${JsonTransformEnum.tag}__btn`,
       btnCopy: `${JsonTransformEnum.tag}__btn--copy`,
       btnClear: `${JsonTransformEnum.tag}__btn--clear`,
+      btnFormat: `${JsonTransformEnum.tag}__btn--format`,
       popup: `${JsonTransformEnum.tag}__popup`,
       textAreaContainer: `${JsonTransformEnum.tag}__textAreaContainer`,
+      errorInput: `${JsonTransformEnum.tag}__error`,
     };
   }
 
@@ -42,10 +45,11 @@ export class JsonTransformTemplate extends Template {
     return `
       <div class="${this._clsNames.container}">
         <div class="${this._clsNames.textAreaContainer}">
-          <textarea  rea class="${this._clsNames.textArea}"></textarea>
+          <textarea class="${this._clsNames.textArea}" tabindex="-1"></textarea>
         </div>
         <div class="${this._clsNames.btnContainer}">
-          <button class="${this._clsNames.btn} ${this._clsNames.btnCopy}">Copiar</button>
+        <button class="${this._clsNames.btn} ${this._clsNames.btnFormat}">Formatear</button>
+          <button class="${this._clsNames.btn} ${this._clsNames.btnCopy} button">Copiar</button>
           <button class="${this._clsNames.btn} ${this._clsNames.btnClear}">Limpiar</button>
         </div>
       </div>
@@ -67,6 +71,7 @@ export class JsonTransformTemplate extends Template {
         --font-size: 1em;
         --font-family: "Roboto", sans-serif;
         --line-height: 1.5;
+        --color_error: #bb0000;
       }
       .${this._clsNames.container}{
         display: flex;
@@ -90,14 +95,28 @@ export class JsonTransformTemplate extends Template {
         white-space: pre-wrap;
         scrollbar-width: thin;
       }
+      .${this._clsNames.textAreaError} {
+        border-color: var(--color_error);
+      }
       .${this._clsNames.textArea}:focus-visible {
         outline: 1px solid var(--color_primary);
+      }
+      .${this._clsNames.textAreaError}:focus-visible {
+        outline: none;
       }
       .${this._clsNames.textArea}::-webkit-scrollbar {
         width: 1px;
       }
+      .${this._clsNames.errorInput}{
+        font-size: 0.9em;
+        text-align: end;
+        color: var(--color_error);
+        width: 90%;
+        padding: 0 0.5em;
+      }
       .${this._clsNames.textAreaContainer} {
         flex: 10;
+        flex-direction: column;
       }
       .${this._clsNames.btnContainer}{
         flex: 1;
@@ -126,6 +145,9 @@ export class JsonTransformTemplate extends Template {
       }
       .${this._clsNames.btn}:hover {
         opacity: 0.8
+      }
+      .${this._clsNames.btn}:active {
+        transform: scale(0.95);
       }
       .${this.clsNames.popup}{
         padding: 0.3em;
