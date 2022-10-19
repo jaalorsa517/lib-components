@@ -1,0 +1,108 @@
+import { CarouselEnum } from "lib/components/carousel/Carousel.enum";
+import { ICarousel } from "lib/components/carousel/ICarousel";
+import { Template } from "lib/shared/class/Template.cls";
+
+export class CarouselTemplate extends Template {
+  private _clsNames: ICarousel;
+  private _template: string;
+  private _style: string;
+
+  constructor() {
+    super();
+    this._clsNames = this._getClsNames();
+    this._template = this._getTemplate();
+    this._style = this._getStyle();
+  }
+
+  get clsNames(): ICarousel {
+    return this._clsNames;
+  }
+  get template(): string {
+    return this._template;
+  }
+  get style(): string {
+    return this._style;
+  }
+
+  private _getClsNames(): ICarousel {
+    return {
+      root: `${CarouselEnum.tag}`,
+      container: `${CarouselEnum.tag}__container`,
+      arrow: `${CarouselEnum.tag}__arrow`,
+      arrowLeft: `${CarouselEnum.tag}__arrow--left`,
+      arrowRight: `${CarouselEnum.tag}__arrow--right`,
+      slides: `${CarouselEnum.tag}__slides`,
+      slot: `${CarouselEnum.tag}__slot`,
+    };
+  }
+
+  private _getTemplate(): string {
+    return `
+      <div class="${this._clsNames.container}">
+        <div class="${this._clsNames.arrow} ${this._clsNames.arrowLeft}">
+          <span>&#5176;</span>
+        </div>
+        <div class="${this._clsNames.slides}">
+          <slot class="${this._clsNames.slot}"></slot>
+        </div>
+        <div class="${this._clsNames.arrow} ${this._clsNames.arrowRight}">
+          <span>&#5171;</span>
+        </div>
+      </div>
+    `;
+  }
+
+  private _getStyle(): string {
+    return `
+    ${this._clsNames.root}, :host{
+      display: block;
+      width: fit-content;
+      font-size: 16px;
+      --color_back_arrows: #000;
+      --color_icon: #fff;
+      --size_arrows: 1.5em;
+      --size_icon: 1.5em;
+    }
+    .${this._clsNames.container}{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 90vw;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .${this._clsNames.arrow} {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: var(--size_arrows);
+      height: var(--size_arrows);
+      flex: 0 0 var(--size_arrows);
+      text-align: center;
+      font-size: var(--size_icon);
+      color: var(--color_icon);
+      background-color: var(--color_back_arrows);
+      border-radius: 50%;
+      cursor: pointer;
+      user-select: none;
+    }
+    .${this._clsNames.slides}{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-grow: 1;
+      overflow: hidden;
+      scroll-behavior: smooth;
+    }
+    .${this._clsNames.arrow} > span{
+      position: relative;
+    }
+    .${this._clsNames.arrowLeft} > span{
+      left: -0.1em;
+    }
+    .${this._clsNames.arrowRight} > span{
+      left: 0.1em;
+    }
+    `;
+  }
+}

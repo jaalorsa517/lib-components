@@ -7,7 +7,7 @@ import { ISwitchObject } from "lib/shared/interfaces";
 
 export class Toggle extends Element {
   static get observedAttributes() {
-    return ["checked", "label"];
+    return ["checked", "label", "*"];
   }
   private _checked: boolean;
   private _eventEmitter: CustomEvent;
