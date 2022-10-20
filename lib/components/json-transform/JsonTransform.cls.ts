@@ -93,13 +93,15 @@ export class JsonTransform extends ElementOpen {
   private formatJson(text: string) {
     let textCleared = "";
     try {
-      const textParsed = JSON.parse(this.textReplace(text));
+      const textReplace = this.textReplace(text);
+      const textParsed = JSON.parse(textReplace);
       textCleared = JSON.stringify(textParsed, null, 2);
       this.validate(Validates.VALIDATE);
     } catch (error: any) {
       this.validate(Validates.ERROR);
       textCleared = this.textReplace(text);
     }
+
     return textCleared;
   }
 

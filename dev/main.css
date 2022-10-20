@@ -14,3 +14,7 @@ header{
   justify-content: flex-end;
   border: 1px solid #215673;
 }
+
+.container j5-json-transform{
+  width: auto;
+}

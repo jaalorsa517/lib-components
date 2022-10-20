@@ -28,4 +28,3 @@ export function renderDomOpen(obj: any): void {
   body.innerHTML = obj._templateCls.template;
   obj.append(body.content);
 }
-

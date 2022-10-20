@@ -409,7 +409,6 @@ j5-json-transform {
   "popup": "j5-json-transform__popup",
   "textAreaContainer": "j5-json-transform__textAreaContainer",
   "errorInput": "j5-json-transform__error"
-</details>
 ```
 
 </details>

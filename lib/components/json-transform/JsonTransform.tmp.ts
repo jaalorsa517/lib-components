@@ -48,7 +48,7 @@ export class JsonTransformTemplate extends Template {
           <textarea class="${this._clsNames.textArea}" tabindex="-1"></textarea>
         </div>
         <div class="${this._clsNames.btnContainer}">
-        <button class="${this._clsNames.btn} ${this._clsNames.btnFormat}">Formatear</button>
+          <button class="${this._clsNames.btn} ${this._clsNames.btnFormat}">Formatear</button>
           <button class="${this._clsNames.btn} ${this._clsNames.btnCopy} button">Copiar</button>
           <button class="${this._clsNames.btn} ${this._clsNames.btnClear}">Limpiar</button>
         </div>
@@ -120,6 +120,7 @@ export class JsonTransformTemplate extends Template {
       }
       .${this._clsNames.btnContainer}{
         flex: 1;
+        flex-direction: column;
       }
       .${this._clsNames.btnContainer},
       .${this._clsNames.textAreaContainer} {
@@ -131,7 +132,8 @@ export class JsonTransformTemplate extends Template {
       }
       .${this._clsNames.btn} {
         padding: .1875em .3125em;
-        margin: 1em;
+        margin: 0.3em 0;
+        width: 90%;
         min-width: 100px;
         position: relative;
         font-size: .9375em;
@@ -158,6 +160,15 @@ export class JsonTransformTemplate extends Template {
         background-color: var(--color_popup);
         transform: translate(-50%, -50%);
         animation: entry 1.2s linear forwards;
+      }
+      @media screen and (min-width: 768px) {
+        .${this._clsNames.btnContainer}{
+          flex-direction: row;
+        }
+        .${this._clsNames.btn} {
+          margin: 1em;
+          width: auto;
+        }
       }
       @keyframes entry{
         0%{
