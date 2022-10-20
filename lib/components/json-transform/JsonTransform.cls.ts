@@ -1,6 +1,6 @@
 import { ElementOpen } from "lib/shared/class/ElementOpen.csl";
 import { ESCAPE } from "lib/shared/constantes/regex.constantes";
-import { Validates } from "lib/shared/enums";
+import { Attributes, Validates } from "lib/shared/enums";
 import { renderDomOpen } from "lib/shared/utils";
 import { JsonTransformTemplate } from "./JsonTransform.tmp";
 
@@ -14,11 +14,28 @@ export class JsonTransform extends ElementOpen {
   constructor() {
     super();
     this._templateCls = new JsonTransformTemplate();
-    this._render();
   }
 
   private _render() {
     renderDomOpen(this);
+  }
+
+  private _init(): void {
+    this._btnClear = this.querySelector(`.${this._templateCls.clsNames.btnClear}`) as HTMLButtonElement;
+    if (this._btnClear) this._btnClear.addEventListener("click", this.onClear.bind(this));
+
+    this._btnCopy = this.querySelector(`.${this._templateCls.clsNames.btnCopy}`) as HTMLButtonElement;
+    if (this._btnCopy) this._btnCopy.addEventListener("click", this.onCopy.bind(this));
+
+    this._btnFormat = this.querySelector(`.${this._templateCls.clsNames.btnFormat}`) as HTMLButtonElement;
+    if (this._btnFormat) this._btnFormat.addEventListener("click", this.onFormat.bind(this));
+
+    this._textArea = this.querySelector(`.${this._templateCls.clsNames.textArea}`) as HTMLTextAreaElement;
+    if (this._textArea) {
+      this._textArea.addEventListener("input", this.onInput.bind(this));
+      this._textArea.addEventListener("keydown", this.onKeyDown.bind(this));
+      this._textArea.addEventListener("paste", this.onPaste.bind(this));
+    }
   }
 
   private onClear() {
@@ -27,6 +44,7 @@ export class JsonTransform extends ElementOpen {
       this._textArea.value = "";
     }
   }
+
   private onCopy() {
     if (this._textArea) {
       navigator.clipboard.writeText(this._textArea.value);
@@ -39,6 +57,7 @@ export class JsonTransform extends ElementOpen {
       }, 2000);
     }
   }
+
   private onInput(e: any) {
     const isEscape = !Boolean(e.data);
     e.preventDefault();
@@ -48,6 +67,7 @@ export class JsonTransform extends ElementOpen {
       this._textArea.value = this.formatJson(this._textArea.value);
     }
   }
+
   private onKeyDown(e: any) {
     if (e.code === "Tab") {
       e.preventDefault();
@@ -67,6 +87,7 @@ export class JsonTransform extends ElementOpen {
       return;
     }
   }
+
   private onPaste(e: ClipboardEvent) {
     e.preventDefault();
     e.stopPropagation();
@@ -101,7 +122,6 @@ export class JsonTransform extends ElementOpen {
       this.validate(Validates.ERROR);
       textCleared = this.textReplace(text);
     }
-
     return textCleared;
   }
 
@@ -122,22 +142,10 @@ export class JsonTransform extends ElementOpen {
     }
   }
 
-  connectedCallback(): void {
-    this._btnClear = this.querySelector(`.${this._templateCls.clsNames.btnClear}`) as HTMLButtonElement;
-    if (this._btnClear) this._btnClear.addEventListener("click", this.onClear.bind(this));
-
-    this._btnCopy = this.querySelector(`.${this._templateCls.clsNames.btnCopy}`) as HTMLButtonElement;
-    if (this._btnCopy) this._btnCopy.addEventListener("click", this.onCopy.bind(this));
-
-    this._btnFormat = this.querySelector(`.${this._templateCls.clsNames.btnFormat}`) as HTMLButtonElement;
-    if (this._btnFormat) this._btnFormat.addEventListener("click", this.onFormat.bind(this));
-
-    this._textArea = this.querySelector(`.${this._templateCls.clsNames.textArea}`) as HTMLTextAreaElement;
-    if (this._textArea) {
-      this._textArea.addEventListener("input", this.onInput.bind(this));
-      this._textArea.addEventListener("keydown", this.onKeyDown.bind(this));
-      this._textArea.addEventListener("paste", this.onPaste.bind(this));
-    }
+  connectedCallback() {
+    const hash = this.getAttribute(Attributes.hash);
+    if (!hash) this._render();
+    this._init();
   }
 
   disconnectedCallback() {

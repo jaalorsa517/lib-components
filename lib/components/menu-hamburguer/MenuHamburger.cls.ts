@@ -1,4 +1,5 @@
 import { Element } from "lib/shared/class/Element.cls";
+import { Attributes } from "lib/shared/enums";
 import { renderDom } from "lib/shared/utils";
 import { MenuHamburguerTemplate } from "./MenuHamburguer.tmp";
 
@@ -15,7 +16,6 @@ export class MenuHamburguer extends Element {
     super();
     this._animation = this.getAttribute("in-out") || "opacity";
     this._templateCls = new MenuHamburguerTemplate(this._animation);
-    this._render();
     this._eventEmitter = new CustomEvent("isOpen", { bubbles: false, detail: { isOpen: this._isOpen } });
   }
 
@@ -60,6 +60,10 @@ export class MenuHamburguer extends Element {
     }
   }
 
+  connectedCallback() {
+    const hash = this.getAttribute(Attributes.hash);
+    if (!hash) this._render();
+  }
   disconnectedCallback() {
     if (this._menuElement) this._menuElement.removeEventListener("click", this.onClick, false);
   }

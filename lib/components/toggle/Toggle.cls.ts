@@ -1,7 +1,7 @@
 import { ToggleTemplate } from "./Toggle.tmpt";
 import { Element } from "lib/shared/class/Element.cls";
 import { getType } from "lib/shared/utils";
-import { Types } from "lib/shared/enums";
+import { Attributes, Types } from "lib/shared/enums";
 import { renderDom } from "lib/shared/utils";
 import { ISwitchObject } from "lib/shared/interfaces";
 
@@ -21,8 +21,6 @@ export class Toggle extends Element {
     this._labelOptions = this._getOptionsLabel();
     this._templateCls = new ToggleTemplate(this._getLabel);
     this._attrs = this._getLogicAttr();
-    this._render();
-    this.addEventListener("click", this.onClick, false);
     this._eventEmitter = new CustomEvent("change", { detail: { isChecked: this._checked } });
   }
   private _render() {
@@ -79,6 +77,11 @@ export class Toggle extends Element {
     if (oldValue !== newValue) this._attrs[name](newValue);
   }
   connectedCallback() {
+    const hash = this.getAttribute(Attributes.hash);
+    if (!hash) {
+      this._render();
+    }
+    this.addEventListener("click", this.onClick, false);
     this.setAttribute("checked", `${this._checked}`);
     this.setAttribute("label", this._getLabel);
     this._eventEmitter.detail.isChecked = this._checked;

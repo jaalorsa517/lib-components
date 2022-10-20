@@ -1,5 +1,6 @@
 import { CarouselTemplate } from "lib/components/carousel/Carousel.tmp";
 import { Element } from "lib/shared/class/Element.cls";
+import { Attributes } from "lib/shared/enums";
 import { ISwitchObject } from "lib/shared/interfaces";
 import { renderDom } from "lib/shared/utils";
 
@@ -20,7 +21,6 @@ export class Carousel extends Element {
     this._templateCls = new CarouselTemplate();
     this._countSlides = parseInt(this.getAttribute("count-slides") || "3");
     this._attrs = this._getLogicAttr();
-    this._render();
   }
 
   private _render() {
@@ -99,26 +99,30 @@ export class Carousel extends Element {
   }
 
   connectedCallback(): void {
+    const hash = this.getAttribute(Attributes.hash);
+    if (!hash) {
+      this._render();
+    }
+
     this._slides = this.getElement(`.${this._templateCls.clsNames.slides}`) as unknown as HTMLDivElement;
 
     const timeWait = parseInt(this.getAttribute("transition-auto") || "0");
-
     if (timeWait) {
       this._setInterval = setInterval(() => {
         this.moveRight();
       }, timeWait);
-    }
 
-    this.setWidthContainer();
+      this.setWidthContainer();
 
-    const arrowLeft = this.getElement(`.${this._templateCls.clsNames.arrowLeft}`);
-    if (arrowLeft) {
-      arrowLeft.addEventListener("click", this.moveLeft.bind(this));
-    }
+      const arrowLeft = this.getElement(`.${this._templateCls.clsNames.arrowLeft}`);
+      if (arrowLeft) {
+        arrowLeft.addEventListener("click", this.moveLeft.bind(this));
+      }
 
-    const arrowRight = this.getElement(`.${this._templateCls.clsNames.arrowRight}`);
-    if (arrowRight) {
-      arrowRight.addEventListener("click", this.moveRight.bind(this));
+      const arrowRight = this.getElement(`.${this._templateCls.clsNames.arrowRight}`);
+      if (arrowRight) {
+        arrowRight.addEventListener("click", this.moveRight.bind(this));
+      }
     }
   }
 

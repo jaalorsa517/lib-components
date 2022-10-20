@@ -2,10 +2,11 @@ import { TooltipTemplate } from "./Tooltip.tmpt";
 import { Element } from "lib/shared/class/Element.cls";
 import { renderDom } from "lib/shared/utils";
 import { ISwitchObject } from "lib/shared/interfaces";
+import { Attributes } from "lib/shared/enums";
 
 export class Tooltip extends Element {
   static get observedAttributes() {
-    return ["text", "startposition"];
+    return ["text", "startposition", "*"];
   }
 
   private _templateCls: TooltipTemplate;
@@ -24,7 +25,6 @@ export class Tooltip extends Element {
     this._text = this.getAttribute("text") || "";
     this._startPosition = this._evaluateStartPosition(this.getAttribute("startposition"));
     this._attrs = this._getAttrs();
-    this._render();
   }
   private _render() {
     renderDom(this);
@@ -150,6 +150,10 @@ export class Tooltip extends Element {
     if (oldValue !== newValue) this._attrs[name](newValue);
   }
   connectedCallback() {
+    const hash = this.getAttribute(Attributes.hash);
+    if (!hash) {
+      this._render();
+    }
     this.addEventListener("mouseenter", this._onMouseIn, false);
     this.addEventListener("mouseleave", this._onMouseOut, false);
   }

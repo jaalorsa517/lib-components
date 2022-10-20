@@ -131,6 +131,9 @@ export class MenuHamburguerTemplate extends Template {
       .${this._clsNames.menu}.active .${this._clsNames.lineTres} {
         transform: rotate(45deg) translate(-25%, -55%);
       }
+      .${this._clsNames.menu}.active + .${this._clsNames.containeChild}{
+        z-index: var(--menuZIndex);
+      }
       .${this._clsNames.containeChild}{
         width: var(--menuWidth);
         height: var(--menuHeight);
@@ -140,7 +143,7 @@ export class MenuHamburguerTemplate extends Template {
         right: var(--menuPositionRight);
         font-size: 1rem;
         background-color: var(--menuBackground);
-        z-index: var(--menuZIndex);
+        z-index: -1;
         opacity: ${this._opacity || "1"};
         transition: ${this._transition};
       }
