@@ -49,7 +49,8 @@ export class Carousel extends Element {
         this._slides.scrollLeft += this._widthSlide;
         return;
       }
-      this._slides.scrollLeft += this._widthSlide - (this._slides.scrollLeft % this._widthSlide);
+      const scrollLeft = Math.round(this._widthSlide - (this._slides.scrollLeft % this._widthSlide));
+      this._slides.scrollLeft += scrollLeft;
     }
   }
 
@@ -66,8 +67,8 @@ export class Carousel extends Element {
         this._slides.scrollLeft -= this._widthSlide;
         return;
       }
-
-      this._slides.scrollLeft -= this._widthSlide + (this._slides.scrollLeft % this._widthSlide);
+      const scrollLeft = Math.round(this._widthSlide + (this._slides.scrollLeft % this._widthSlide));
+      this._slides.scrollLeft -= scrollLeft;
     }
   }
 
@@ -84,7 +85,7 @@ export class Carousel extends Element {
           acc += margin + width;
           return acc;
         }, 0);
-        this._widthSlide = sumatoriaSize / slides.length;
+        this._widthSlide = Math.round(sumatoriaSize / slides.length);
 
         const slotParent = slot.parentElement;
         if (slotParent) {
@@ -111,18 +112,18 @@ export class Carousel extends Element {
       this._setInterval = setInterval(() => {
         this.moveRight();
       }, timeWait);
+    }
 
-      this.setWidthContainer();
+    this.setWidthContainer();
 
-      const arrowLeft = this.getElement(`.${this._templateCls.clsNames.arrowLeft}`);
-      if (arrowLeft) {
-        arrowLeft.addEventListener("click", this.moveLeft.bind(this));
-      }
+    const arrowLeft = this.getElement(`.${this._templateCls.clsNames.arrowLeft}`);
+    if (arrowLeft) {
+      arrowLeft.addEventListener("click", this.moveLeft.bind(this));
+    }
 
-      const arrowRight = this.getElement(`.${this._templateCls.clsNames.arrowRight}`);
-      if (arrowRight) {
-        arrowRight.addEventListener("click", this.moveRight.bind(this));
-      }
+    const arrowRight = this.getElement(`.${this._templateCls.clsNames.arrowRight}`);
+    if (arrowRight) {
+      arrowRight.addEventListener("click", this.moveRight.bind(this));
     }
   }
 

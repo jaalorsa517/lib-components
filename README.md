@@ -33,7 +33,7 @@ Las característica que tiene la librería J5-Components son:
 - Toda etiqueta tiene que tener etiqueta de apertura y cierre.
 - Posibilidad de insertar componentes web en cualquier lugar de la página web.
 - Flexibilidad de los componentes, al permitir personalizares los estilos y funcionalidades.
-- Todos los componentes heredan de una clase Abstracta, la cual tiene una función, llamada **getElement** que permite acceder a cualquier elemento interno del Shadow Dom.
+- Todos los componentes que usen Shadow Dom, heredan de una clase Abstracta, la cual tiene una función, llamada **getElement** que permite acceder a cualquier elemento interno del Shadow Dom.
 
   ```javascript
   const toggle = document.querySelector("j5-toggle");
@@ -418,7 +418,7 @@ j5-json-transform {
 
 #### Instrucciones
 
-En el html se usa la etiqueta `j5-carousel`
+Este es un componente que **no** usa el ShadowDOM. En el html se usa la etiqueta `j5-carousel`
 
 ```html
 <j5-carousel></j5-carousel>
