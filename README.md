@@ -418,7 +418,7 @@ j5-json-transform {
 
 #### Instrucciones
 
-Este es un componente que **no** usa el ShadowDOM. En el html se usa la etiqueta `j5-carousel`
+En el html se usa la etiqueta `j5-carousel`
 
 ```html
 <j5-carousel></j5-carousel>

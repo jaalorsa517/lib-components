@@ -1,5 +1,5 @@
 import { ElementOpen } from "lib/shared/class/ElementOpen.csl";
-import { ESCAPE } from "lib/shared/constantes/regex.constantes";
+import { ESCAPE, Regex } from "lib/shared/constantes/regex.constantes";
 import { Attributes, Validates } from "lib/shared/enums";
 import { renderDomOpen } from "lib/shared/utils";
 import { JsonTransformTemplate } from "./JsonTransform.tmp";
@@ -106,9 +106,15 @@ export class JsonTransform extends ElementOpen {
 
   private textReplace(text: string) {
     return text
-      .replace(ESCAPE.newLine.regex, ESCAPE.newLine.value)
+      .replace(ESCAPE.newLine.regex, ESCAPE.nothing.value)
       .replace(ESCAPE.doubleQuote.regex, ESCAPE.doubleQuote.value)
-      .replace(ESCAPE.tab.regex, ESCAPE.tab.value);
+      .replace(ESCAPE.tab.regex, ESCAPE.nothing.value)
+      .replace(ESCAPE.backSlash.regex, ESCAPE.nothing.value)
+      .replace(Regex.COMMA_END, `$1$2${ESCAPE.newLine.value}`)
+      .replace(Regex.COMMA_BEFORE_CLOSE, "$1")
+      .replaceAll(Regex.OPEN_CONTENT, `$1${ESCAPE.newLine.value}`)
+      .replace(Regex.CLOSE_CONTENT, `${ESCAPE.newLine.value}$1`)
+      .replace(Regex.LOOK_KEY_OBJECT, '"$2": $4');
   }
 
   private formatJson(text: string) {
@@ -116,9 +122,10 @@ export class JsonTransform extends ElementOpen {
     try {
       const textReplace = this.textReplace(text);
       const textParsed = JSON.parse(textReplace);
-      textCleared = JSON.stringify(textParsed, null, 2);
+      textCleared = JSON.stringify(textParsed, null, 4);
       this.validate(Validates.VALIDATE);
     } catch (error: any) {
+      console.log(error.message);
       this.validate(Validates.ERROR);
       textCleared = this.textReplace(text);
     }
