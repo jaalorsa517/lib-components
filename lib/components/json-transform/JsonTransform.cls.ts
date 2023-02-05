@@ -21,16 +21,16 @@ export class JsonTransform extends ElementOpen {
   }
 
   private _init(): void {
-    this._btnClear = this.querySelector(`.${this._templateCls.clsNames.btnClear}`) as HTMLButtonElement;
+    this._btnClear = this.getElement(`.${this._templateCls.clsNames.btnClear}`) as HTMLButtonElement;
     if (this._btnClear) this._btnClear.addEventListener("click", this.onClear.bind(this));
 
-    this._btnCopy = this.querySelector(`.${this._templateCls.clsNames.btnCopy}`) as HTMLButtonElement;
+    this._btnCopy = this.getElement(`.${this._templateCls.clsNames.btnCopy}`) as HTMLButtonElement;
     if (this._btnCopy) this._btnCopy.addEventListener("click", this.onCopy.bind(this));
 
-    this._btnFormat = this.querySelector(`.${this._templateCls.clsNames.btnFormat}`) as HTMLButtonElement;
+    this._btnFormat = this.getElement(`.${this._templateCls.clsNames.btnFormat}`) as HTMLButtonElement;
     if (this._btnFormat) this._btnFormat.addEventListener("click", this.onFormat.bind(this));
 
-    this._textArea = this.querySelector(`.${this._templateCls.clsNames.textArea}`) as HTMLTextAreaElement;
+    this._textArea = this.getElement(`.${this._templateCls.clsNames.textArea}`) as HTMLTextAreaElement;
     if (this._textArea) {
       this._textArea.addEventListener("input", this.onInput.bind(this));
       this._textArea.addEventListener("keydown", this.onKeyDown.bind(this));
@@ -113,7 +113,8 @@ export class JsonTransform extends ElementOpen {
       .replace(Regex.COMMA_END, `$1$2${ESCAPE.newLine.value}`)
       .replace(Regex.COMMA_BEFORE_CLOSE, "$1")
       .replaceAll(Regex.OPEN_CONTENT, `$1${ESCAPE.newLine.value}`)
-      .replace(Regex.CLOSE_CONTENT, `${ESCAPE.newLine.value}$1`)
+      .replaceAll(Regex.CLOSE_CONTENT, `${ESCAPE.newLine.value}$1`)
+      .replaceAll(Regex.NEW_LINE_DUPLICATED, ESCAPE.newLine.value)
       .replace(Regex.LOOK_KEY_OBJECT, '"$2": $4');
   }
 

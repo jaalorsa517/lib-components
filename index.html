@@ -9,6 +9,19 @@
   </head>
   <body>
     <script type="module" src="/dev/main.js"></script>
+    <style>
+      li{
+        font-size: 2em;
+        color: #f00;
+      }
+    </style>
+    <j5-menu-hamburguer style="position: fixed; right: 0;">
+        <li>Nombre</li>
+        <li>Apellido</li>
+        <li>Casa</li>
+        <li>Oficio</li>
+        <li>Edad</li>
+    </j5-menu-hamburguer>
     <div class="container">
       <j5-carousel count-slides="2" transition-auto="5000">
         <div class="item"> <span>1</span> </div>
@@ -22,6 +35,5 @@
     <div class="container">
       <j5-json-transform></j5-json-transform>
     </div>
-    <j5-menu-hamburguer></j5-menu-hamburguer>
   </body>
 </html>

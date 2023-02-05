@@ -61,6 +61,7 @@ export class JsonTransformTemplate extends Template {
       ${this._clsNames.root}, :host{
         display: block;
         position: relative;
+        z-index: -1;
         width: 500px;
         height: 500px;
         --color_primary: #438C40;
