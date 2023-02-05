@@ -10,30 +10,42 @@
   <body>
     <script type="module" src="/dev/main.js"></script>
     <style>
-      li{
+      li {
         font-size: 2em;
         color: #f00;
+        display: block;
+        margin: auto;
+        z-index: 20000;
+        position: relative;
+        cursor: pointer;
       }
     </style>
-    <j5-menu-hamburguer style="position: fixed; right: 0;">
-        <li>Nombre</li>
-        <li>Apellido</li>
-        <li>Casa</li>
-        <li>Oficio</li>
-        <li>Edad</li>
+    <j5-menu-hamburguer id="menu" animation="slide_in_out_4" style="position: fixed; right: 0">
+      <li class="liclass">Nombre</li>
+      <li>Apellido</li>
+      <li>Casa</li>
+      <li>Oficio</li>
+      <li>Edad</li>
     </j5-menu-hamburguer>
     <div class="container">
       <j5-carousel count-slides="2" transition-auto="5000">
-        <div class="item"> <span>1</span> </div>
-        <div class="item"> <span>2</span> </div>
-        <div class="item"> <span>3</span> </div>
-        <div class="item"> <span>4</span> </div>
-        <div class="item"> <span>5</span> </div>
-        <div class="item"> <span>6</span> </div>
+        <div class="item"><span>1</span></div>
+        <div class="item"><span>2</span></div>
+        <div class="item"><span>3</span></div>
+        <div class="item"><span>4</span></div>
+        <div class="item"><span>5</span></div>
+        <div class="item"><span>6</span></div>
       </j5-carousel>
     </div>
     <div class="container">
       <j5-json-transform></j5-json-transform>
     </div>
+    <script>
+      const menu = document.getElementById("menu");
+      const itemNombre = document.querySelector("#menu li.liclass");
+      itemNombre.addEventListener("click", () => {
+        console.log("click en nombre");
+      });
+    </script>
   </body>
 </html>

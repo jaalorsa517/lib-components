@@ -109,16 +109,18 @@ export class MenuHamburguerTemplate extends Template {
       .${this._clsNames.menu}.active + .${this._clsNames.containeChild}{
         z-index: var(--menuZIndex);
       }
-      .${this._clsNames.containeChild} section{
-        width: var(--menuWidth);
-        height: var(--menuHeight);
+      .${this._clsNames.containeChild}{
         position: fixed;
         top: var(--menuPositionTop);
         left: var(--menuPositionLeft);
         font-size: 1rem;
-        background-color: var(--menuBackground);
         z-index: -1;
-        opacity: ${this._opacity || "1"};
+        opacity: 1;
+      }
+      .${this._clsNames.containeChild} section{
+        width: var(--menuWidth);
+        height: var(--menuHeight);
+        background-color: var(--menuBackground);
       }
     `;
   }
