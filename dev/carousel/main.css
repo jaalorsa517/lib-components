@@ -1,17 +1,8 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 main {
   display: grid;
   grid-template-columns: 1fr;
   justify-items: center;
-}
-
-#menu li {
-  list-style: none;
+  gap: 15px;
 }
 
 .item {
@@ -30,3 +21,4 @@ main {
   text-align: center;
   line-height: 12.5;
 }
+

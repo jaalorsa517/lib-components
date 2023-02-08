@@ -58,8 +58,6 @@ export class CarouselTemplate extends Template {
       display: block;
       width: fit-content;
       font-size: 16px;
-      position: relative;
-      z-index: -1;
       --color_back_arrows: #000;
       --color_icon: #fff;
       --size_arrows: 1.5em;

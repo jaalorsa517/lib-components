@@ -6,6 +6,7 @@ import { MenuHamburguerTemplate } from "./MenuHamburguer.tmp";
 import { CommandEnum } from "lib/shared/enums/AnimateCommands.enum";
 import { IAnimationInOut } from "lib/shared/interfaces/AnimateCommands.interface";
 import { ISwitchObject } from "lib/shared/interfaces";
+import { ProxyWatch } from "lib/shared/class/Proxies.cls";
 
 export class MenuHamburguer extends ElementOpen {
   static get observedAttributes() {
@@ -14,7 +15,7 @@ export class MenuHamburguer extends ElementOpen {
   private _eventEmitter: CustomEvent;
   private _menuElement: Element | null = null;
   private _templateCls: MenuHamburguerTemplate;
-  private _isOpen: boolean = false;
+  private _isOpen: ProxyWatch;
   private _container: Element | null = null;
   private _slotChild: Element | null = null;
   private _animation: string;
@@ -22,6 +23,8 @@ export class MenuHamburguer extends ElementOpen {
   private _animationIn: Animation = new Animation();
   private _animationOut: Animation = new Animation();
   private _attrs: ISwitchObject;
+  private count: number = 0;
+  private count2: number = 0;
 
   private get getMenu() {
     return this.getElement(`.${this._templateCls.clsNames.containeChild} section`) as Element;
@@ -31,10 +34,15 @@ export class MenuHamburguer extends ElementOpen {
     super();
     this._animation = this.validateAttributeAnimation();
     this._templateCls = new MenuHamburguerTemplate();
-    this._eventEmitter = new CustomEvent("isOpen", { bubbles: false, detail: { isOpen: this._isOpen } });
+    this._isOpen = new ProxyWatch(false);
+    this._isOpen.watch(this.openClose.bind(this));
+    this._eventEmitter = new CustomEvent("isOpen", {
+      bubbles: false,
+      detail: { isOpen: this._isOpen.value },
+    });
     this._attrs = this._getLogicAttr();
   }
-
+  
   private validateAttributeAnimation(): string {
     const animation = this.getAttribute("animation") as string;
     const isExist: boolean = Object.entries(CommandEnum).findIndex(([_, value]) => animation === value) > -1;
@@ -61,8 +69,7 @@ export class MenuHamburguer extends ElementOpen {
   private _getLogicAttr(): ISwitchObject {
     return {
       isopen: (value: string) => {
-        this._isOpen = value === "true";
-        this.openClose(this._isOpen);
+        this._isOpen.value = value === "true";
       },
     };
   }
@@ -71,31 +78,33 @@ export class MenuHamburguer extends ElementOpen {
     const children = Array.from(this.children);
     const index = children.findIndex((elem: Element) =>
       elem.className.includes(this._templateCls.clsNames.container)
-    );
-    if (index > -1) {
-      children.splice(index, 1);
-      const section = document.createElement("section");
-      children.forEach((elem: Element) => {
-        section.append(elem);
-      });
-      this._children = section;
-      section.addEventListener("click", () => {
-        this._isOpen = false
-        this.openClose(this._isOpen);
+      );
+      if (index > -1) {
+        children.splice(index, 1);
+        const section = document.createElement("section");
+        children.forEach((elem: Element) => {
+          section.append(elem);
+        });
+        this._children = section;
+        section.addEventListener("click", () => {
+          this.count++;
+          this._isOpen.value = false;
+          console.log("isOpen", this.count);
       });
     }
   }
 
   private saveChildren() {
     const children = this.getMenu;
-    if (children) this._children = children 
+    if (children) this._children = children;
   }
 
   private onClick = (e: Event) => {
+    this.count2++;
+    console.log("count2",this.count2)
     e.preventDefault();
-    this._isOpen = !this._isOpen;
-    this.openClose(this._isOpen);
-    this._eventEmitter.detail.isOpen = this._isOpen;
+    this._isOpen.value = !this._isOpen.value;
+    this._eventEmitter.detail.isOpen = this._isOpen.value;
     this.dispatchEvent(this._eventEmitter);
   };
 
@@ -120,12 +129,12 @@ export class MenuHamburguer extends ElementOpen {
     }
   }
 
-  private openClose(isOpen: boolean): void {
+  private openClose(): void {
     const menu = this.getElement(`.${this._templateCls.clsNames.menu}`);
     if (menu) menu.classList.toggle("active");
     const lines = this.getElements(`.${this._templateCls.clsNames.line}`);
     lines.forEach((line) => line.classList.toggle("active"));
-    if (isOpen) this.appendSlot();
+    if (this._isOpen.value) this.appendSlot();
     else this.removeSlot();
   }
 

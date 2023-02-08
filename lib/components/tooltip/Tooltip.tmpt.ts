@@ -39,8 +39,6 @@ export class TooltipTemplate extends Template {
         height: fit-content;
         display:block;
         box-sizing: border-box;
-        position: relative;
-        z-index: -1;
         cursor:pointer;
         --border-width: 10px;
         --background-color: #2d302d;

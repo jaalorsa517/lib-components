@@ -47,15 +47,18 @@ export class Toggle extends Element {
     return labelOptions;
   }
   private _changeChecked(value: boolean) {
-    const radio: HTMLInputElement | null = this.shadowDOM.querySelector(
-      `.${this._templateCls.clsNames.radio}`
-    );
-    if (radio) {
-      this._checked = value || false;
-      radio.checked = value || false;
-      this._attrs.label(this._getLabel);
-      return;
-    }
+    setTimeout(() => {
+      const radio: HTMLInputElement | null = this.shadowDOM.querySelector(
+        `.${this._templateCls.clsNames.radio}`
+      );
+      if (radio) {
+        this._checked = value || false;
+        radio.checked = value || false;
+
+        this._attrs.label(this._getLabel);
+        return;
+      }
+    }, 0);
   }
   private _changeLabel(label: string) {
     const labelEl: HTMLElement | null = this.shadowDOM.querySelector(`.${this._templateCls.clsNames.label}`);

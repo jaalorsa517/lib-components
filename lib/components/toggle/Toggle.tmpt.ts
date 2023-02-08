@@ -52,8 +52,6 @@ export class ToggleTemplate extends Template {
           display:block;
           font-size: 10px;
           box-sizing: border-box;
-          position: relative;
-          z-index: -1;
           --backWidth: 6em;
           --backHeight: 3em;
           --backColorActive: green;
