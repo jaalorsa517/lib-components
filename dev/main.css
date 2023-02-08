@@ -1,26 +1,17 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 main {
   display: grid;
   grid-template-columns: 1fr;
   justify-items: center;
-}
-
-#menu li {
-  list-style: none;
+  gap: 15px;
 }
 
 .item {
   margin: 0 0.2em;
-  background-color: beige;
+  background-color: #dfeedc;
   border-radius: 1em;
   cursor: pointer;
   font-size: 16px;
-  color: black;
+  color: #252525;
 }
 
 .item > span {
@@ -29,4 +20,8 @@ main {
   width: 200px;
   text-align: center;
   line-height: 12.5;
+}
+
+j5-carousel{
+  --color_back_arrows: #438c40;
 }

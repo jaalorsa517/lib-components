@@ -12,7 +12,6 @@ export function header() {
       <li><a href="/index.html">Inicio</a></li>
       <li><a href="/dev/carousel/index.html">Carousel</a></li>
       <li><a href="/dev/jsontransformer/index.html">JsonTransform</a></li>
-      <li><a href="/dev/menu/index.html">Menu</a></li>
       <li><a href="/dev/toggle/index.html">Toggle</a></li>
       <li><a href="/dev/tooltip/index.html">Tooltip</a></li>
     </j5-menu-hamburguer>`;
@@ -41,7 +40,7 @@ export function header() {
     }  
     header a {
       font-weight: bold;
-      color: indianred;
+      color: #438C40;
       text-decoration: none;
       font-size: 1.2em;
     }

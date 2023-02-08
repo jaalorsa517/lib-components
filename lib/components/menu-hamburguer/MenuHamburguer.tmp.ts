@@ -7,7 +7,6 @@ export class MenuHamburguerTemplate extends Template {
   private _template: string;
   private _style: string;
   private _propTime: number = 600;
-  private _opacity: string = "";
 
   constructor() {
     super();
@@ -59,11 +58,11 @@ export class MenuHamburguerTemplate extends Template {
         display: block;
         font-size: 10px;
         position: relative;
-        --color: #215376;
-        --colorActive: #215376;
+        --color: #438c40;
+        --colorActive: #438c40;
         --menuPositionTop: 0;
         --menuPositionLeft: 0;
-        --menuBackground: #0f0;
+        --menuBackground: #fff;
         --menuWidth: 100vw;
         --menuHeight: 100vh;
         --menuZIndex: 1000;
@@ -114,7 +113,7 @@ export class MenuHamburguerTemplate extends Template {
         top: var(--menuPositionTop);
         left: var(--menuPositionLeft);
         font-size: 1rem;
-        z-index: -1;
+        z-index: var(--menuZIndex);
         opacity: 1;
       }
       .${this._clsNames.containeChild} section{
