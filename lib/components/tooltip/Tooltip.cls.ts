@@ -61,7 +61,7 @@ export class Tooltip extends Element {
     return "vertical";
   }
   private _horizontalOption(tooltip: HTMLDivElement) {
-    const { isLimitXRight, width, client, sizeBefore, isLimitYBottom, isLimitYTop } =
+    const { isLimitXRight, width, sizeBefore, isLimitYBottom, isLimitYTop } =
       this._getBoundingClientRect(tooltip);
     if (isLimitXRight) {
       tooltip.classList.add(`${this._templateCls.clsNames.tootipOeste}`);
@@ -87,12 +87,12 @@ export class Tooltip extends Element {
       this.style.setProperty("--top-before", `${sizeBefore / 2}px`);
       return;
     }
-    this.style.setProperty("--top", `calc(50% - ${client.heightTooltip / 2}px )`);
+    this.style.setProperty("--top", `calc(50% - ${tooltip.clientHeight / 2}px )`);
     this.style.setProperty("--bottom-before", `initial`);
     this.style.setProperty("--top-before", `calc(50% - ${sizeBefore}px)`);
   }
   private _verticalOption(tooltip: HTMLDivElement) {
-    const { isLimitXRight, isLlimitXLeft, isLimitYBottom, height, sizeBefore, client } =
+    const { isLimitXRight, isLlimitXLeft, isLimitYBottom, height, sizeBefore ,client } =
       this._getBoundingClientRect(tooltip);
 
     if (isLimitYBottom) {
@@ -116,7 +116,7 @@ export class Tooltip extends Element {
       this.style.setProperty("--left-before", `${sizeBefore / 2}px`);
       return;
     }
-    this.style.setProperty("--left", `calc(50% - ${client.widthTooltip / 2}px)`);
+    this.style.setProperty("--left", `calc(50% - ${client.widthTooltip/ 2}px)`);
     this.style.setProperty("--left-before", `calc(50% - ${sizeBefore}px)`);
     return;
   }

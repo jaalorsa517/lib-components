@@ -6,6 +6,7 @@ export const Regex = {
   OPEN_CONTENT: /([\{\[])/g,
   CLOSE_CONTENT: /([\}\]])/g,
   LOOK_KEY_OBJECT: /(['"])?([a-zA-Z0-9_-]+)(['"])?\s*:(.+[,]?)[^\}^\]\S]/gm,
+  NEW_LINE_DUPLICATED: /[\n]{2,}/g,
 };
 
 export const ESCAPE = {

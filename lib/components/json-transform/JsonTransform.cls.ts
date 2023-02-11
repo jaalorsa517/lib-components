@@ -21,18 +21,17 @@ export class JsonTransform extends ElementOpen {
   }
 
   private _init(): void {
-    this._btnClear = this.querySelector(`.${this._templateCls.clsNames.btnClear}`) as HTMLButtonElement;
+    this._btnClear = this.getElement(`.${this._templateCls.clsNames.btnClear}`) as HTMLButtonElement;
     if (this._btnClear) this._btnClear.addEventListener("click", this.onClear.bind(this));
 
-    this._btnCopy = this.querySelector(`.${this._templateCls.clsNames.btnCopy}`) as HTMLButtonElement;
+    this._btnCopy = this.getElement(`.${this._templateCls.clsNames.btnCopy}`) as HTMLButtonElement;
     if (this._btnCopy) this._btnCopy.addEventListener("click", this.onCopy.bind(this));
 
-    this._btnFormat = this.querySelector(`.${this._templateCls.clsNames.btnFormat}`) as HTMLButtonElement;
+    this._btnFormat = this.getElement(`.${this._templateCls.clsNames.btnFormat}`) as HTMLButtonElement;
     if (this._btnFormat) this._btnFormat.addEventListener("click", this.onFormat.bind(this));
 
-    this._textArea = this.querySelector(`.${this._templateCls.clsNames.textArea}`) as HTMLTextAreaElement;
+    this._textArea = this.getElement(`.${this._templateCls.clsNames.textArea}`) as HTMLTextAreaElement;
     if (this._textArea) {
-      this._textArea.addEventListener("input", this.onInput.bind(this));
       this._textArea.addEventListener("keydown", this.onKeyDown.bind(this));
       this._textArea.addEventListener("paste", this.onPaste.bind(this));
     }
@@ -80,12 +79,6 @@ export class JsonTransform extends ElementOpen {
       }
       return;
     }
-    if (["Delete", "Backspace"].includes(e.code)) {
-      if (!this._textArea?.value) {
-        this.validate(Validates.VALIDATE);
-      }
-      return;
-    }
   }
 
   private onPaste(e: ClipboardEvent) {
@@ -104,16 +97,21 @@ export class JsonTransform extends ElementOpen {
     }
   }
 
-  private textReplace(text: string) {
+  private textReplaceScaped(text: string):string {
     return text
       .replace(ESCAPE.newLine.regex, ESCAPE.nothing.value)
       .replace(ESCAPE.doubleQuote.regex, ESCAPE.doubleQuote.value)
       .replace(ESCAPE.tab.regex, ESCAPE.nothing.value)
       .replace(ESCAPE.backSlash.regex, ESCAPE.nothing.value)
+  }
+
+  private textReplace(text: string) :string{
+    return this.textReplaceScaped(text)
       .replace(Regex.COMMA_END, `$1$2${ESCAPE.newLine.value}`)
       .replace(Regex.COMMA_BEFORE_CLOSE, "$1")
       .replaceAll(Regex.OPEN_CONTENT, `$1${ESCAPE.newLine.value}`)
-      .replace(Regex.CLOSE_CONTENT, `${ESCAPE.newLine.value}$1`)
+      .replaceAll(Regex.CLOSE_CONTENT, `${ESCAPE.newLine.value}$1`)
+      .replaceAll(Regex.NEW_LINE_DUPLICATED, ESCAPE.newLine.value)
       .replace(Regex.LOOK_KEY_OBJECT, '"$2": $4');
   }
 
@@ -125,9 +123,10 @@ export class JsonTransform extends ElementOpen {
       textCleared = JSON.stringify(textParsed, null, 4);
       this.validate(Validates.VALIDATE);
     } catch (error: any) {
-      console.log(error.message);
+      console.warn(error.message);
       this.validate(Validates.ERROR);
-      textCleared = this.textReplace(text);
+      textCleared = this.textReplaceScaped(text);
+      
     }
     return textCleared;
   }

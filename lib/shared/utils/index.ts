@@ -1,7 +1,8 @@
 import { Attributes, Types } from "lib/shared/enums";
 import { typesOption } from "lib/shared/dictionaries";
 
-const _unique: number = Math.round(new Date().getTime() * Math.random());
+export const uniqueHash: Function = ()=> Math.round(new Date().getTime() * Math.random());
+const _unique: number = uniqueHash()
 
 export function getType(value: string, type: Types, DOM: any): any {
   let response: any;

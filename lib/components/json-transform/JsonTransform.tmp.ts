@@ -60,7 +60,6 @@ export class JsonTransformTemplate extends Template {
     return `
       ${this._clsNames.root}, :host{
         display: block;
-        position: relative;
         width: 500px;
         height: 500px;
         --color_primary: #438C40;
@@ -135,8 +134,8 @@ export class JsonTransformTemplate extends Template {
         margin: 0.3em 0;
         width: 90%;
         min-width: 100px;
-        position: relative;
         font-size: .9375em;
+        position: relative;
         color: var(--color_font_light);
         outline: none;
         background-color: var(--color_primary);
