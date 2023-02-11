@@ -1,9 +1,14 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
 main{
   width: 95vw;
   display: flex;
   flex-wrap: wrap;
 }
 
-main > * {
+main * {
   margin: 5px;
 }

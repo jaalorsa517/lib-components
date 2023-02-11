@@ -23,8 +23,6 @@ export class MenuHamburguer extends ElementOpen {
   private _animationIn: Animation = new Animation();
   private _animationOut: Animation = new Animation();
   private _attrs: ISwitchObject;
-  private count: number = 0;
-  private count2: number = 0;
 
   private get getMenu() {
     return this.getElement(`.${this._templateCls.clsNames.containeChild} section`) as Element;
@@ -87,9 +85,9 @@ export class MenuHamburguer extends ElementOpen {
         });
         this._children = section;
         section.addEventListener("click", () => {
-          this.count++;
           this._isOpen.value = false;
-          console.log("isOpen", this.count);
+          this._eventEmitter.detail.isOpen = this._isOpen.value;
+          this.dispatchEvent(this._eventEmitter);
       });
     }
   }
@@ -100,8 +98,6 @@ export class MenuHamburguer extends ElementOpen {
   }
 
   private onClick = (e: Event) => {
-    this.count2++;
-    console.log("count2",this.count2)
     e.preventDefault();
     this._isOpen.value = !this._isOpen.value;
     this._eventEmitter.detail.isOpen = this._isOpen.value;

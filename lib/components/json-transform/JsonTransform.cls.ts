@@ -32,7 +32,6 @@ export class JsonTransform extends ElementOpen {
 
     this._textArea = this.getElement(`.${this._templateCls.clsNames.textArea}`) as HTMLTextAreaElement;
     if (this._textArea) {
-      this._textArea.addEventListener("input", this.onInput.bind(this));
       this._textArea.addEventListener("keydown", this.onKeyDown.bind(this));
       this._textArea.addEventListener("paste", this.onPaste.bind(this));
     }
@@ -80,12 +79,6 @@ export class JsonTransform extends ElementOpen {
       }
       return;
     }
-    if (["Delete", "Backspace"].includes(e.code)) {
-      if (!this._textArea?.value) {
-        this.validate(Validates.VALIDATE);
-      }
-      return;
-    }
   }
 
   private onPaste(e: ClipboardEvent) {
@@ -104,12 +97,16 @@ export class JsonTransform extends ElementOpen {
     }
   }
 
-  private textReplace(text: string) {
+  private textReplaceScaped(text: string):string {
     return text
       .replace(ESCAPE.newLine.regex, ESCAPE.nothing.value)
       .replace(ESCAPE.doubleQuote.regex, ESCAPE.doubleQuote.value)
       .replace(ESCAPE.tab.regex, ESCAPE.nothing.value)
       .replace(ESCAPE.backSlash.regex, ESCAPE.nothing.value)
+  }
+
+  private textReplace(text: string) :string{
+    return this.textReplaceScaped(text)
       .replace(Regex.COMMA_END, `$1$2${ESCAPE.newLine.value}`)
       .replace(Regex.COMMA_BEFORE_CLOSE, "$1")
       .replaceAll(Regex.OPEN_CONTENT, `$1${ESCAPE.newLine.value}`)
@@ -126,9 +123,10 @@ export class JsonTransform extends ElementOpen {
       textCleared = JSON.stringify(textParsed, null, 4);
       this.validate(Validates.VALIDATE);
     } catch (error: any) {
-      console.log(error.message);
+      console.warn(error.message);
       this.validate(Validates.ERROR);
-      textCleared = this.textReplace(text);
+      textCleared = this.textReplaceScaped(text);
+      
     }
     return textCleared;
   }
