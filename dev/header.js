@@ -11,6 +11,7 @@ export function header() {
     <j5-menu-hamburguer id="menu" animation="${animations.at(index)}">
       <li><a href="/index.html">Inicio</a></li>
       <li><a href="/dev/carousel/index.html">Carousel</a></li>
+      <li><a href="/dev/collapse/index.html">Collapse</a></li>
       <li><a href="/dev/jsontransformer/index.html">JsonTransform</a></li>
       <li><a href="/dev/toggle/index.html">Toggle</a></li>
       <li><a href="/dev/tooltip/index.html">Tooltip</a></li>

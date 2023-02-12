@@ -1,19 +1,19 @@
 import { ToggleTemplate } from "./Toggle.tmpt";
-import { Element } from "lib/shared/class/Element.cls";
+import { ElementAttr } from "lib/shared/class/Element.cls";
 import { getType } from "lib/shared/utils";
-import { Attributes, Types } from "lib/shared/enums";
-import { renderDom } from "lib/shared/utils";
+import { Types } from "lib/shared/enums";
 import { ISwitchObject } from "lib/shared/interfaces";
 
-export class Toggle extends Element {
-  static get observedAttributes() {
-    return ["checked", "label", "*"];
-  }
+export class Toggle extends ElementAttr {
   private _checked: boolean;
   private _eventEmitter: CustomEvent;
   private _templateCls: ToggleTemplate;
   private _labelOptions: string[] = [];
-  private _attrs: ISwitchObject;
+  protected _attrs: ISwitchObject;
+
+  static get observedAttributes() {
+    return ["checked", "label", "*"];
+  }
 
   constructor() {
     super();
@@ -22,9 +22,6 @@ export class Toggle extends Element {
     this._templateCls = new ToggleTemplate(this._getLabel);
     this._attrs = this._getLogicAttr();
     this._eventEmitter = new CustomEvent("change", { detail: { isChecked: this._checked } });
-  }
-  private _render() {
-    renderDom(this);
   }
   private _getLogicAttr(): ISwitchObject {
     return {
@@ -76,14 +73,8 @@ export class Toggle extends Element {
     return this._labelOptions[+this._checked];
   }
 
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (oldValue !== newValue) this._attrs[name](newValue);
-  }
   connectedCallback() {
-    const hash = this.getAttribute(Attributes.hash);
-    if (!hash) {
-      this._render();
-    }
+    this.render()
     this.addEventListener("click", this.onClick, false);
     this.setAttribute("checked", `${this._checked}`);
     this.setAttribute("label", this._getLabel);

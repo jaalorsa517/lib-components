@@ -1,23 +1,21 @@
 import { TooltipTemplate } from "./Tooltip.tmpt";
-import { Element } from "lib/shared/class/Element.cls";
-import { renderDom } from "lib/shared/utils";
+import { ElementAttr } from "lib/shared/class/Element.cls";
 import { ISwitchObject } from "lib/shared/interfaces";
-import { Attributes } from "lib/shared/enums";
 
-export class Tooltip extends Element {
-  static get observedAttributes() {
-    return ["text", "startposition", "*"];
-  }
-
+export class Tooltip extends ElementAttr {
   private _templateCls: TooltipTemplate;
   private _text: string;
   private _startPosition: "vertical" | "horizontal";
   private _gap: number = 20;
-  private _attrs: ISwitchObject;
+  protected _attrs: ISwitchObject;
   private _positionObject: ISwitchObject<HTMLDivElement> = {
     vertical: this._verticalOption.bind(this),
     horizontal: this._horizontalOption.bind(this),
   };
+
+  static get observedAttributes() {
+    return ["text", "startposition", "*"];
+  }
 
   constructor() {
     super();
@@ -25,9 +23,6 @@ export class Tooltip extends Element {
     this._text = this.getAttribute("text") || "";
     this._startPosition = this._evaluateStartPosition(this.getAttribute("startposition"));
     this._attrs = this._getAttrs();
-  }
-  private _render() {
-    renderDom(this);
   }
   private _getAttrs(): ISwitchObject {
     return {
@@ -92,7 +87,7 @@ export class Tooltip extends Element {
     this.style.setProperty("--top-before", `calc(50% - ${sizeBefore}px)`);
   }
   private _verticalOption(tooltip: HTMLDivElement) {
-    const { isLimitXRight, isLlimitXLeft, isLimitYBottom, height, sizeBefore ,client } =
+    const { isLimitXRight, isLlimitXLeft, isLimitYBottom, height, sizeBefore, client } =
       this._getBoundingClientRect(tooltip);
 
     if (isLimitYBottom) {
@@ -116,7 +111,7 @@ export class Tooltip extends Element {
       this.style.setProperty("--left-before", `${sizeBefore / 2}px`);
       return;
     }
-    this.style.setProperty("--left", `calc(50% - ${client.widthTooltip/ 2}px)`);
+    this.style.setProperty("--left", `calc(50% - ${client.widthTooltip / 2}px)`);
     this.style.setProperty("--left-before", `calc(50% - ${sizeBefore}px)`);
     return;
   }
@@ -145,15 +140,8 @@ export class Tooltip extends Element {
       ...boundingClient,
     };
   }
-
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (oldValue !== newValue) this._attrs[name](newValue);
-  }
   connectedCallback() {
-    const hash = this.getAttribute(Attributes.hash);
-    if (!hash) {
-      this._render();
-    }
+    this.render();
     this.addEventListener("mouseenter", this._onMouseIn, false);
     this.addEventListener("mouseleave", this._onMouseOut, false);
   }

@@ -1,7 +1,6 @@
 import { ElementOpen } from "lib/shared/class/ElementOpen.csl";
 import { ESCAPE, Regex } from "lib/shared/constantes/regex.constantes";
-import { Attributes, Validates } from "lib/shared/enums";
-import { renderDomOpen } from "lib/shared/utils";
+import { Validates } from "lib/shared/enums";
 import { JsonTransformTemplate } from "./JsonTransform.tmp";
 
 export class JsonTransform extends ElementOpen {
@@ -14,10 +13,6 @@ export class JsonTransform extends ElementOpen {
   constructor() {
     super();
     this._templateCls = new JsonTransformTemplate();
-  }
-
-  private _render() {
-    renderDomOpen(this);
   }
 
   private _init(): void {
@@ -149,9 +144,7 @@ export class JsonTransform extends ElementOpen {
   }
 
   connectedCallback() {
-    const hash = this.getAttribute(Attributes.hash);
-    if (!hash) this._render();
-    this._init();
+    this.render(this._init.bind(this))
   }
 
   disconnectedCallback() {

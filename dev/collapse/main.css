@@ -1,0 +1,21 @@
+main {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+#summary, .summary {
+  cursor: pointer;
+}
+
+#content, .content {
+  font-size: 1.1em;
+}
+
+.collapse .container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+  border-radius: 8px;
+}

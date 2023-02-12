@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Libreria de componentes web, para ayudar al desarrollador javascript en su día a día. Como la librería está hecha en javascript vanilla, se puede utilizar en cualquier proyecto javascript, sin importar el framework usado.
+Librería de componentes web, para ayudar al desarrollador javascript en su día a día. Como la librería está hecha en javascript vanilla, se puede utilizar en cualquier proyecto javascript, sin importar el framework usado.
 
 ## Instalación
 
@@ -33,14 +33,14 @@ Las característica que tiene la librería J5-Components son:
 - Toda etiqueta tiene que tener etiqueta de apertura y cierre.
 - Posibilidad de insertar componentes web en cualquier lugar de la página web.
 - Flexibilidad de los componentes, al permitir personalizares los estilos y funcionalidades.
-- Todos los componentes que usen Shadow Dom, heredan de una clase Abstracta, la cual tiene una función, llamada **getElement** que permite acceder a cualquier elemento interno del Shadow Dom.
+- Todos los componentes heredan de una clase Abstracta, la cual tiene una función, llamada **getElement** o **getElements**, que permite acceder a cualquier elemento interno del Shadow Dom.
 
   ```javascript
   const toggle = document.querySelector("j5-toggle");
   const containerShadow = toggle.getElement(".j5-toggle__container");
   ```
 
-- Personalizar los estilos de los componentes de acuerdo a la necesidad del proyecto. Cada componente tiene definidas unas **variables de CSS**, que al reescribirlas se pueden personalizar los estilos. También los tamaños vienen definidos en unidades `em`, por lo que modificando el `font-size` de un componente, se puede modificar el tamaño de todos los componentes. **TENER EN CUENTA** los fundamentos de CSS en el tema de especificidad. Más información en: [CSS Especificidad](https://developer.mozilla.org/es/docs/Web/CSS/Specificity)
+- Personalizar los estilos de los componentes de acuerdo a la necesidad del proyecto. Cada componente tiene definidas unas **variables de CSS**, que al reescribirlas se pueden personalizar los estilos. También los tamaños vienen definidos en unidades `em`, por lo que modificando el `font-size` de un componente, se puede modificar el tamaño de todos los componentes. Además, componentes que no tengan ShadowDom, se puede personalizar todo lo que se requiera. **TENER EN CUENTA** los fundamentos de CSS en el tema de especificidad. Más información en: [CSS Especificidad](https://developer.mozilla.org/es/docs/Web/CSS/Specificity)
   ```css
   j5-toggle {
     font-size: 10px;
@@ -55,7 +55,7 @@ Las característica que tiene la librería J5-Components son:
 ## Componentes
 
 <details class="detail">
-<summary><h3 class="toggle-head" style="display:inline;"> j5-toggle: Toggle </h3> </summary>
+<summary><strong> j5-toggle: Toggle </strong></summary>
 
 #### Instrucciones
 
@@ -151,7 +151,7 @@ Label: `j5-toggle__label`,
 
 </details>
 <details class="detail">
-<summary><h3 class="toggle-head" style="display:inline;"> j5-tooltip: Tooltip </h3> </summary>
+<summary><strong class="toggle-head" style="display:inline;"> j5-tooltip: Tooltip </strong> </summary>
 
 #### Instrucciones
 
@@ -263,7 +263,7 @@ Transición tooltip: `j5-tooltip__tooltip--in-out`,
 
 </details>
 <details class="detail">
-<summary><h3 class="toggle-head" style="display:inline;"> j5-menu-hamburguer: Menú hamburguesa </h3> </summary>
+<summary><strong class="toggle-head" style="display:inline;"> j5-menu-hamburguer: Menú hamburguesa </strong> </summary>
 
 #### Instrucciones
 
@@ -352,7 +352,7 @@ Contenedor del slot: `j5-menu-hamburguer__containerChild`
 </details>
 
 <details class="detail">
-<summary><h3 class="json-head" style="display:inline;"> j5-json-transform: Formatear JSON </h3> </summary>
+<summary><strong class="json-head" style="display:inline;"> j5-json-transform: Formatear JSON </strong> </summary>
 
 #### Instrucciones
 
@@ -414,7 +414,7 @@ j5-json-transform {
 </details>
 
 <details class="detail">
-<summary><h3 class="json-head" style="display:inline;"> j5-carousel: Carousel (Slider) </h3> </summary>
+<summary><strong > j5-carousel: Carousel (Slider) </strong> </summary>
 
 #### Instrucciones
 
