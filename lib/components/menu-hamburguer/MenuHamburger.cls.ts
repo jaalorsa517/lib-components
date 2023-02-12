@@ -20,7 +20,7 @@ export class MenuHamburguer extends ElementOpenAttr {
   protected _attrs: ISwitchObject;
 
   static get observedAttributes() {
-    return ["isopen", "*"];
+    return ["isopen", "animation", "*"];
   }
 
   private get getMenu() {
@@ -29,7 +29,7 @@ export class MenuHamburguer extends ElementOpenAttr {
 
   constructor() {
     super();
-    this._animation = this.validateAttributeAnimation();
+    this._animation = this.validateAttributeAnimation(this.getAttribute("animation") || "");
     this._templateCls = new MenuHamburguerTemplate();
     this._isOpen = new ProxyWatch(false);
     this._isOpen.watch(this.openClose.bind(this));
@@ -40,8 +40,7 @@ export class MenuHamburguer extends ElementOpenAttr {
     this._attrs = this._getLogicAttr();
   }
 
-  private validateAttributeAnimation(): string {
-    const animation = this.getAttribute("animation") as string;
+  private validateAttributeAnimation(animation: string): string {
     const isExist: boolean = Object.entries(CommandEnum).findIndex(([_, value]) => animation === value) > -1;
     return isExist ? animation : CommandEnum.FADE_IN_OUT;
   }
@@ -54,17 +53,24 @@ export class MenuHamburguer extends ElementOpenAttr {
     this._slotChild = this.getElement(`.${this._templateCls.clsNames.containeChild}`);
 
     this.extractSlot();
-    if (this._slotChild) {
-      const instances = new StrategyCommand(this._slotChild, this._animation).instances as IAnimationInOut;
-      this._animationIn = instances.in.execute();
-      this._animationOut = instances.out.execute();
-    }
+    this.setAttribute("animation", this._animation);
   }
 
   private _getLogicAttr(): ISwitchObject {
     return {
       isopen: (value: string) => {
         this._isOpen.value = value === "true";
+      },
+      animation: (value: string) => {
+        setTimeout(() => {
+          this._animation = this.validateAttributeAnimation(value);
+          if (this._slotChild) {
+            const instances = new StrategyCommand(this._slotChild, this._animation)
+              .instances as IAnimationInOut;
+            this._animationIn = instances.in.execute();
+            this._animationOut = instances.out.execute();
+          }
+        }, 0);
       },
     };
   }
@@ -132,7 +138,7 @@ export class MenuHamburguer extends ElementOpenAttr {
   }
 
   connectedCallback() {
-    this.render(this._init.bind(this))
+    this.render(this._init.bind(this));
   }
 
   disconnectedCallback() {

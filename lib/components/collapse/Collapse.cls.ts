@@ -29,7 +29,7 @@ export class Collapse extends ElementOpenAttr {
     super();
     this._isOpen.watch(this._toggleContent.bind(this));
     this._templateCls = new CollapseTemplate();
-    this._animation = this.validateAttributeAnimation();
+    this._animation = CommandEnum.GROW_IN_OUT;
     this._attrs = this._getLogicAttr();
     this._eventEmitter = new CustomEvent("isOpen", { detail: { isOpen: this._isOpen.value } });
   }
@@ -42,13 +42,21 @@ export class Collapse extends ElementOpenAttr {
     };
   }
 
-  private validateAttributeAnimation(): string {
-    const animation = this.getAttribute("animation") as string;
-    const isExist: boolean = animation === CommandEnum.GROW_IN_OUT;
-    return isExist ? animation : CommandEnum.GROW_IN_OUT;
+  private _clearContent() {
+    const children = Array.from(this.children);
+    children.forEach((child) => {
+      const isContainer = child.classList.contains(this._templateCls.clsNames.container);
+      const slot = child.getAttribute("slot") || "";
+      if (isContainer || ["content", "summary"].includes(slot)) {
+        return
+      }
+      child.remove();
+    });
   }
 
   private _init() {
+    this._clearContent();
+
     this._slotSummary = this.getElement("[slot=summary]");
     this._slotContent = this.getElement("[slot=content]");
 
