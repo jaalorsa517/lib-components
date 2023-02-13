@@ -17,8 +17,8 @@ export class Toggle extends ElementAttr {
 
   constructor() {
     super();
-    this._checked = getType(this.getAttribute("checked") || "false", Types.BOOLEAN, this.shadowDOM);
     this._labelOptions = this._getOptionsLabel();
+    this._checked = getType(this.getAttribute("checked") || "false", Types.BOOLEAN, this.shadowDOM);
     this._templateCls = new ToggleTemplate(this._getLabel);
     this._attrs = this._getLogicAttr();
     this._eventEmitter = new CustomEvent("change", { detail: { isChecked: this._checked } });
@@ -44,18 +44,15 @@ export class Toggle extends ElementAttr {
     return labelOptions;
   }
   private _changeChecked(value: boolean) {
-    setTimeout(() => {
-      const radio: HTMLInputElement | null = this.shadowDOM.querySelector(
-        `.${this._templateCls.clsNames.radio}`
-      );
-      if (radio) {
-        this._checked = value || false;
-        radio.checked = value || false;
-
-        this._attrs.label(this._getLabel);
-        return;
-      }
-    }, 0);
+    const radio: HTMLInputElement | null = this.shadowDOM.querySelector(
+      `.${this._templateCls.clsNames.radio}`
+    );
+    if (radio) {
+      radio.checked = value || false;
+      this._checked = value || false;
+      this._attrs.label(this._getLabel);
+      return;
+    }
   }
   private _changeLabel(label: string) {
     const labelEl: HTMLElement | null = this.shadowDOM.querySelector(`.${this._templateCls.clsNames.label}`);
@@ -74,12 +71,12 @@ export class Toggle extends ElementAttr {
   }
 
   connectedCallback() {
-    this.render()
+    this.render(() => {
+      this._changeChecked(this._checked);
+      this._eventEmitter.detail.isChecked = this._checked;
+      this.dispatchEvent(this._eventEmitter);
+    });
     this.addEventListener("click", this.onClick, false);
-    this.setAttribute("checked", `${this._checked}`);
-    this.setAttribute("label", this._getLabel);
-    this._eventEmitter.detail.isChecked = this._checked;
-    this.dispatchEvent(this._eventEmitter);
   }
   disconnectedCallback() {
     this.removeEventListener("click", this.onClick);
