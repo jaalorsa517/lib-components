@@ -1,30 +1,27 @@
 import { ToggleTemplate } from "./Toggle.tmpt";
-import { Element } from "lib/shared/class/Element.cls";
+import { ElementAttr } from "lib/shared/class/Element.cls";
 import { getType } from "lib/shared/utils";
-import { Attributes, Types } from "lib/shared/enums";
-import { renderDom } from "lib/shared/utils";
+import { Types } from "lib/shared/enums";
 import { ISwitchObject } from "lib/shared/interfaces";
 
-export class Toggle extends Element {
-  static get observedAttributes() {
-    return ["checked", "label", "*"];
-  }
+export class Toggle extends ElementAttr {
   private _checked: boolean;
   private _eventEmitter: CustomEvent;
   private _templateCls: ToggleTemplate;
   private _labelOptions: string[] = [];
-  private _attrs: ISwitchObject;
+  protected _attrs: ISwitchObject;
+
+  static get observedAttributes() {
+    return ["checked", "label", "*"];
+  }
 
   constructor() {
     super();
-    this._checked = getType(this.getAttribute("checked") || "false", Types.BOOLEAN, this.shadowDOM);
     this._labelOptions = this._getOptionsLabel();
+    this._checked = getType(this.getAttribute("checked") || "false", Types.BOOLEAN, this.shadowDOM);
     this._templateCls = new ToggleTemplate(this._getLabel);
     this._attrs = this._getLogicAttr();
     this._eventEmitter = new CustomEvent("change", { detail: { isChecked: this._checked } });
-  }
-  private _render() {
-    renderDom(this);
   }
   private _getLogicAttr(): ISwitchObject {
     return {
@@ -47,18 +44,15 @@ export class Toggle extends Element {
     return labelOptions;
   }
   private _changeChecked(value: boolean) {
-    setTimeout(() => {
-      const radio: HTMLInputElement | null = this.shadowDOM.querySelector(
-        `.${this._templateCls.clsNames.radio}`
-      );
-      if (radio) {
-        this._checked = value || false;
-        radio.checked = value || false;
-
-        this._attrs.label(this._getLabel);
-        return;
-      }
-    }, 0);
+    const radio: HTMLInputElement | null = this.shadowDOM.querySelector(
+      `.${this._templateCls.clsNames.radio}`
+    );
+    if (radio) {
+      radio.checked = value || false;
+      this._checked = value || false;
+      this._attrs.label(this._getLabel);
+      return;
+    }
   }
   private _changeLabel(label: string) {
     const labelEl: HTMLElement | null = this.shadowDOM.querySelector(`.${this._templateCls.clsNames.label}`);
@@ -76,19 +70,13 @@ export class Toggle extends Element {
     return this._labelOptions[+this._checked];
   }
 
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (oldValue !== newValue) this._attrs[name](newValue);
-  }
   connectedCallback() {
-    const hash = this.getAttribute(Attributes.hash);
-    if (!hash) {
-      this._render();
-    }
+    this.render(() => {
+      this._changeChecked(this._checked);
+      this._eventEmitter.detail.isChecked = this._checked;
+      this.dispatchEvent(this._eventEmitter);
+    });
     this.addEventListener("click", this.onClick, false);
-    this.setAttribute("checked", `${this._checked}`);
-    this.setAttribute("label", this._getLabel);
-    this._eventEmitter.detail.isChecked = this._checked;
-    this.dispatchEvent(this._eventEmitter);
   }
   disconnectedCallback() {
     this.removeEventListener("click", this.onClick);

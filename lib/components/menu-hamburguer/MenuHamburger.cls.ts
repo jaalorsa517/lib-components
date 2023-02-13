@@ -1,6 +1,4 @@
-import { ElementOpen } from "lib/shared/class/ElementOpen.csl";
-import { Attributes } from "lib/shared/enums";
-import { renderDomOpen } from "lib/shared/utils";
+import { ElementOpenAttr } from "lib/shared/class/ElementOpen.csl";
 import { StrategyCommand } from "lib/shared/class/AnimateCommands.cls";
 import { MenuHamburguerTemplate } from "./MenuHamburguer.tmp";
 import { CommandEnum } from "lib/shared/enums/AnimateCommands.enum";
@@ -8,10 +6,7 @@ import { IAnimationInOut } from "lib/shared/interfaces/AnimateCommands.interface
 import { ISwitchObject } from "lib/shared/interfaces";
 import { ProxyWatch } from "lib/shared/class/Proxies.cls";
 
-export class MenuHamburguer extends ElementOpen {
-  static get observedAttributes() {
-    return ["isopen", "*"];
-  }
+export class MenuHamburguer extends ElementOpenAttr {
   private _eventEmitter: CustomEvent;
   private _menuElement: Element | null = null;
   private _templateCls: MenuHamburguerTemplate;
@@ -22,7 +17,11 @@ export class MenuHamburguer extends ElementOpen {
   private _children: Element | null = null;
   private _animationIn: Animation = new Animation();
   private _animationOut: Animation = new Animation();
-  private _attrs: ISwitchObject;
+  protected _attrs: ISwitchObject;
+
+  static get observedAttributes() {
+    return ["isopen", "animation", "*"];
+  }
 
   private get getMenu() {
     return this.getElement(`.${this._templateCls.clsNames.containeChild} section`) as Element;
@@ -30,7 +29,7 @@ export class MenuHamburguer extends ElementOpen {
 
   constructor() {
     super();
-    this._animation = this.validateAttributeAnimation();
+    this._animation = this.validateAttributeAnimation(this.getAttribute("animation") || "");
     this._templateCls = new MenuHamburguerTemplate();
     this._isOpen = new ProxyWatch(false);
     this._isOpen.watch(this.openClose.bind(this));
@@ -40,16 +39,13 @@ export class MenuHamburguer extends ElementOpen {
     });
     this._attrs = this._getLogicAttr();
   }
-  
-  private validateAttributeAnimation(): string {
-    const animation = this.getAttribute("animation") as string;
+
+  private validateAttributeAnimation(animation: string): string {
     const isExist: boolean = Object.entries(CommandEnum).findIndex(([_, value]) => animation === value) > -1;
     return isExist ? animation : CommandEnum.FADE_IN_OUT;
   }
 
-  private _render() {
-    renderDomOpen(this);
-
+  private _init() {
     this._menuElement = this.getElement(`.${this._templateCls.clsNames.menu}`) as HTMLDivElement;
     if (this._menuElement) this._menuElement.addEventListener("click", this.onClick, false);
 
@@ -57,17 +53,24 @@ export class MenuHamburguer extends ElementOpen {
     this._slotChild = this.getElement(`.${this._templateCls.clsNames.containeChild}`);
 
     this.extractSlot();
-    if (this._slotChild) {
-      const instances = new StrategyCommand(this._slotChild, this._animation).instances as IAnimationInOut;
-      this._animationIn = instances.in.execute();
-      this._animationOut = instances.out.execute();
-    }
+    this.setAttribute("animation", this._animation);
   }
 
   private _getLogicAttr(): ISwitchObject {
     return {
       isopen: (value: string) => {
         this._isOpen.value = value === "true";
+      },
+      animation: (value: string) => {
+        setTimeout(() => {
+          this._animation = this.validateAttributeAnimation(value);
+          if (this._slotChild) {
+            const instances = new StrategyCommand(this._slotChild, this._animation)
+              .instances as IAnimationInOut;
+            this._animationIn = instances.in.execute();
+            this._animationOut = instances.out.execute();
+          }
+        }, 0);
       },
     };
   }
@@ -76,18 +79,18 @@ export class MenuHamburguer extends ElementOpen {
     const children = Array.from(this.children);
     const index = children.findIndex((elem: Element) =>
       elem.className.includes(this._templateCls.clsNames.container)
-      );
-      if (index > -1) {
-        children.splice(index, 1);
-        const section = document.createElement("section");
-        children.forEach((elem: Element) => {
-          section.append(elem);
-        });
-        this._children = section;
-        section.addEventListener("click", () => {
-          this._isOpen.value = false;
-          this._eventEmitter.detail.isOpen = this._isOpen.value;
-          this.dispatchEvent(this._eventEmitter);
+    );
+    if (index > -1) {
+      children.splice(index, 1);
+      const section = document.createElement("section");
+      children.forEach((elem: Element) => {
+        section.append(elem);
+      });
+      this._children = section;
+      section.addEventListener("click", () => {
+        this._isOpen.value = false;
+        this._eventEmitter.detail.isOpen = this._isOpen.value;
+        this.dispatchEvent(this._eventEmitter);
       });
     }
   }
@@ -134,13 +137,8 @@ export class MenuHamburguer extends ElementOpen {
     else this.removeSlot();
   }
 
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (oldValue !== newValue) this._attrs[name](newValue);
-  }
-
   connectedCallback() {
-    const hash = this.getAttribute(Attributes.hash);
-    if (!hash) this._render();
+    this.render(this._init.bind(this));
   }
 
   disconnectedCallback() {

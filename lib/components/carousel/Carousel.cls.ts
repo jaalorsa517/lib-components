@@ -1,30 +1,24 @@
 import { CarouselTemplate } from "lib/components/carousel/Carousel.tmp";
-import { Element } from "lib/shared/class/Element.cls";
-import { Attributes } from "lib/shared/enums";
+import { ElementAttr } from "lib/shared/class/Element.cls";
 import { ISwitchObject } from "lib/shared/interfaces";
-import { renderDom } from "lib/shared/utils";
 
-export class Carousel extends Element {
-  static get observedAttributes() {
-    return ["count-slides", "*"];
-  }
-
+export class Carousel extends ElementAttr {
   private _templateCls: CarouselTemplate;
   private _widthSlide: number = 0;
   private _countSlides: number;
-  private _attrs: ISwitchObject;
+  protected _attrs: ISwitchObject;
   private _slides: HTMLDivElement | null = null;
   private _setInterval: number = 0;
+
+  static get observedAttributes() {
+    return ["count-slides", "*"];
+  }
 
   constructor() {
     super();
     this._templateCls = new CarouselTemplate();
     this._countSlides = parseInt(this.getAttribute("count-slides") || "3");
     this._attrs = this._getLogicAttr();
-  }
-
-  private _render() {
-    renderDom(this);
   }
 
   private _getLogicAttr(): ISwitchObject {
@@ -95,15 +89,8 @@ export class Carousel extends Element {
     }
   }
 
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (oldValue !== newValue) this._attrs[name](newValue);
-  }
-
   connectedCallback(): void {
-    const hash = this.getAttribute(Attributes.hash);
-    if (!hash) {
-      this._render();
-    }
+    this.render()
 
     this._slides = this.getElement(`.${this._templateCls.clsNames.slides}`) as unknown as HTMLDivElement;
 

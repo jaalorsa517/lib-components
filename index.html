@@ -11,14 +11,17 @@
     <script type="module" src="/dev/main.js"></script>
     <main>
       <div class="container">
-        <j5-carousel count-slides="2" transition-auto="5000">
-          <div class="item"><span>1</span></div>
-          <div class="item"><span>2</span></div>
-          <div class="item"><span>3</span></div>
-          <div class="item"><span>4</span></div>
-          <div class="item"><span>5</span></div>
-          <div class="item"><span>6</span></div>
-        </j5-carousel>
+        <j5-collapse>
+          <section slot="summary"><h2>Título del resumen</h2></section>
+          <section slot="content">
+            <p>Resumen del collapse</p>
+            <p>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus sit ullam temporibus impedit
+              atque magnam. Et quia aliquid eligendi alias libero! Ipsa magni alias placeat optio odit
+              maiores! Quod, enim?
+            </p>
+          </section>
+        </j5-collapse>
       </div>
       <div class="container">
         <j5-json-transform></j5-json-transform>
@@ -30,6 +33,16 @@
       </div>
       <div class="container">
         <j5-toggle label="Inactivo/Activo"></j5-toggle>
+      </div>
+      <div class="container">
+        <j5-carousel count-slides="2" transition-auto="5000">
+          <div class="item"><span>1</span></div>
+          <div class="item"><span>2</span></div>
+          <div class="item"><span>3</span></div>
+          <div class="item"><span>4</span></div>
+          <div class="item"><span>5</span></div>
+          <div class="item"><span>6</span></div>
+        </j5-carousel>
       </div>
     </main>
   </body>
