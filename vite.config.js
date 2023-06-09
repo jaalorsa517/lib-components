@@ -8,6 +8,7 @@ module.exports = defineConfig({
       entry: path.resolve(__dirname, "lib/main.ts"),
       name: "libComponents",
     },
+    outDir:"components"
   },
   resolve: {
     alias: {

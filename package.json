@@ -1,17 +1,18 @@
 {
   "name": "@jaalorsa/j5-components",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "private": false,
   "description": "Libreria de componentes web para ayudar al desarrollador en su día a día. Como la librería está hecha en vanilla, se puede utilizar sin importar el framework de javascript.",
   "files": [
-    "dist"
+    "components"
   ],
-  "types": "./dist/main.d.ts",
-  "main": "./dist/j5-components.umd.js",
+  "types": "./components/main.d.ts",
+  "main": "./components/j5-components.mjs",
   "exports": {
     ".": {
-      "import": "./dist/j5-components.mjs",
-      "require": "./dist/j5-components.umd.js"
+      "types": "./components/main.d.ts",
+      "import": "./components/j5-components.mjs",
+      "require": "./components/j5-components.umd.js"
     }
   },
   "author": "jaalorsa517",
