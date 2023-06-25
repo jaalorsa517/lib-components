@@ -3,5 +3,6 @@ index.html
 test/
 .gitignore
 lib/
+dev/
 package-lock.json
 tsconfig.json

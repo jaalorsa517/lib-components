@@ -8,7 +8,7 @@ export class Carousel extends ElementAttr {
   private _countSlides: number;
   protected _attrs: ISwitchObject;
   private _slides: HTMLDivElement | null = null;
-  private _setInterval: number = 0;
+  private _setInterval: any = 0;
 
   static get observedAttributes() {
     return ["count-slides", "*"];
