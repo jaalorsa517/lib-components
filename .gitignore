@@ -3,3 +3,4 @@ dist
 components
 .vscode
 *.tgz
+coverage

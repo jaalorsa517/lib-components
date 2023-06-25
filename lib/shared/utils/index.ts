@@ -1,8 +1,9 @@
 import { Attributes, Types } from "lib/shared/enums";
 import { typesOption } from "lib/shared/dictionaries";
 
-export const uniqueHash: Function = ()=> Math.round(new Date().getTime() * Math.random());
-const _unique: number = uniqueHash()
+export function uniqueHash() {
+  return Math.round(new Date().getTime() * Math.random());
+}
 
 export function getType(value: string, type: Types, DOM: any): any {
   let response: any;
@@ -15,6 +16,7 @@ export function getType(value: string, type: Types, DOM: any): any {
 }
 
 export function renderDom(obj: any): void {
+  const _unique: number = uniqueHash();
   const styletmp: HTMLStyleElement = document.createElement("style");
   styletmp.textContent = obj._templateCls.style;
   obj.shadowDOM.appendChild(styletmp);
@@ -25,6 +27,7 @@ export function renderDom(obj: any): void {
 }
 
 export function renderDomOpen(obj: any): void {
+  const _unique: number = uniqueHash();
   const styletmp: HTMLStyleElement = document.createElement("style");
   styletmp.textContent = obj._templateCls.style;
   document.head.appendChild(styletmp);

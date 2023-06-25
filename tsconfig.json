@@ -20,8 +20,9 @@
     "types": ["vite/client"],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./lib"]
+      "@/lib/*": ["./lib"],
+      "@/test/*": ["./test"]
     }
   },
-  "include": ["lib"]
+  "include": ["lib","test"]
 }
