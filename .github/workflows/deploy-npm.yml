@@ -29,6 +29,9 @@ jobs:
       - name: Build library
         run: npm run build
 
+      - name: Validar env
+        run: echo $NODE_AUTH_TOKEN
+
       - name: Publish to npm
         run: npm publish
         env:
