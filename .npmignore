@@ -6,3 +6,4 @@ lib/
 dev/
 package-lock.json
 tsconfig.json
+deploy.local.sh

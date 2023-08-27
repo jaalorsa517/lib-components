@@ -12,7 +12,8 @@ export const typesOption: ITypes = {
     throw new Error(a);
   },
   boolean: (a: string) => {
-    if (a === "true" || a === "false" || !a) return eval(a);
+    if (a === "true" || a === "false" ) return eval(a);
+    if(!a) return false
     throw new Error(a);
   },
   object: (a: string) => {

@@ -4,3 +4,4 @@ components
 .vscode
 *.tgz
 coverage
+deploy.local.sh
