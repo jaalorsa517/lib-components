@@ -1,4 +1,4 @@
-[![Deploy to npm](https://github.com/jaalorsa517/j5-components/actions/workflows/deploy-npm.yml/badge.svg?branch=main)](https://github.com/jaalorsa517/j5-components/actions/workflows/deploy-npm.yml)
+![Static Badge](https://img.shields.io/badge/license-MIT-blue?style=plastic) [![deploy](https://github.com/jaalorsa517/j5-components/actions/workflows/deploy-npm.yml/badge.svg?branch=main)](https://github.com/jaalorsa517/j5-components/actions/workflows/deploy-npm.yml)
 # J5-Components: Librería web components
 
 ## Descripción
