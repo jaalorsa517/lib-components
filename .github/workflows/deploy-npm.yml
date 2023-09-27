@@ -43,6 +43,14 @@ jobs:
     environment:
       name: production
     steps:
+      # Setup .npmrc file to publish to npm
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
+          registry-url: "https://registry.npmjs.org"
+          always-auth: "true"
+          
       - name: Checkout source code
         uses: actions/checkout@v4
 
@@ -66,7 +74,7 @@ jobs:
       - name: Get version from package.json
         id: get_version
         run: echo "version=$(node -p -e "require('./package.json').version")" >> $GITHUB_OUTPUT
-        
+
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
