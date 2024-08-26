@@ -1,8 +1,8 @@
-const path = require("path");
-const { defineConfig } = require("vite");
+import * as path from "path";
+import { defineConfig } from "vite";
 import vite_d_ts from "vite-plugin-dts";
 
-module.exports = defineConfig({
+export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, "lib/main.ts"),
@@ -19,15 +19,13 @@ module.exports = defineConfig({
   },
   plugins: [vite_d_ts()],
   test: {
-    globals: true,
     environment: "jsdom",
-    exclude: ["dev/**/*", "components/**/*", "node_modules/**/*"],
     coverage: {
       provider: "v8",
-      statements: 100,
-      branches: 100,
-      functions: 100,
-      lines: 100,
+      all: true,
+      enabled: true,
+      exclude: ["dev/**/*", "components/**/*", "node_modules/**/*"],
+      reporter: ["json-summary", "html"],
     },
-  },
+  }
 });
