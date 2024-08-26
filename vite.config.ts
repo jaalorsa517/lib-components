@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+
 import * as path from "path";
 import { defineConfig } from "vite";
 import vite_d_ts from "vite-plugin-dts";
@@ -24,7 +26,19 @@ export default defineConfig({
       provider: "v8",
       all: true,
       enabled: true,
-      exclude: ["dev/**/*", "components/**/*", "node_modules/**/*"],
+      exclude: [
+        "test/**",
+        "vite.config.ts",
+        "dev/**/*",
+        "components/**/*",
+        "node_modules/**/*",
+        "lib/main.ts",
+        "lib/shared/constantes/**/*",
+        "lib/shared/dictionaries/**/*",
+        "lib/shared/enums/**/*",
+        "lib/shared/interfaces/**/*",
+        "lib/shared/models/**/*"
+      ],
       reporter: ["json-summary", "html"],
     },
   }
