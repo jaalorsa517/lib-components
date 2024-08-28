@@ -12,7 +12,7 @@ export abstract class ElementOpen extends BaseElement {
     if (cb) cb();
   }
 
-  protected render(cb: Function = () => {}) {
+  render(cb: Function = () => {}) {
     const hash = this.getAttribute(Attributes.hash);
     if (!hash) {
       this._renderComponent(cb);
