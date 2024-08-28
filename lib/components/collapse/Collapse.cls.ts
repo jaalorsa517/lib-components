@@ -29,7 +29,6 @@ export class Collapse extends ElementOpenAttr {
     };
   }
 
-
   connectedCallback() {
     this.collapseService.connectedCallback()
   }
