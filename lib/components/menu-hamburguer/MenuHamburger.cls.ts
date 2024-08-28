@@ -24,7 +24,7 @@ export class MenuHamburguer extends ElementOpenAttr {
   }
 
   private get getMenu() {
-    return this.getElement(`.${this._templateCls.clsNames.containeChild} section`) as Element;
+    return this.getElement(`.${this._templateCls.getClsNames().containeChild} section`) as Element;
   }
 
   constructor() {
@@ -46,11 +46,11 @@ export class MenuHamburguer extends ElementOpenAttr {
   }
 
   private _init() {
-    this._menuElement = this.getElement(`.${this._templateCls.clsNames.menu}`) as HTMLDivElement;
+    this._menuElement = this.getElement(`.${this._templateCls.getClsNames().menu}`) as HTMLDivElement;
     if (this._menuElement) this._menuElement.addEventListener("click", this.onClick, false);
 
-    this._container = this.getElement(`.${this._templateCls.clsNames.container}`);
-    this._slotChild = this.getElement(`.${this._templateCls.clsNames.containeChild}`);
+    this._container = this.getElement(`.${this._templateCls.getClsNames().container}`);
+    this._slotChild = this.getElement(`.${this._templateCls.getClsNames().containeChild}`);
 
     this.extractSlot();
     this.setAttribute("animation", this._animation);
@@ -78,7 +78,7 @@ export class MenuHamburguer extends ElementOpenAttr {
   private extractSlot() {
     const children = Array.from(this.children);
     const index = children.findIndex((elem: Element) =>
-      elem.className.includes(this._templateCls.clsNames.container)
+      elem.className.includes(this._templateCls.getClsNames().container)
     );
     if (index > -1) {
       children.splice(index, 1);
@@ -129,9 +129,9 @@ export class MenuHamburguer extends ElementOpenAttr {
   }
 
   private openClose(): void {
-    const menu = this.getElement(`.${this._templateCls.clsNames.menu}`);
+    const menu = this.getElement(`.${this._templateCls.getClsNames().menu}`);
     if (menu) menu.classList.toggle("active");
-    const lines = this.getElements(`.${this._templateCls.clsNames.line}`);
+    const lines = this.getElements(`.${this._templateCls.getClsNames().line}`);
     lines.forEach((line) => line.classList.toggle("active"));
     if (this._isOpen.value) this.appendSlot();
     else this.removeSlot();

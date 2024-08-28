@@ -5,9 +5,11 @@ import { CommandEnum } from "lib/shared/enums/AnimateCommands.enum";
 import { ISwitchObject } from "lib/shared/interfaces";
 import { IAnimationInOut } from "lib/shared/interfaces/AnimateCommands.interface";
 import { CollapseTemplate } from "./Collapse.tmp";
+import { ITemplate } from "lib/shared/interfaces/Template.interface";
+import { CollapseType } from "./Collapse.type";
 
 export class Collapse extends ElementOpenAttr {
-  private _templateCls: CollapseTemplate;
+  private _templateCls: ITemplate<CollapseType>;
   private _animation: string;
   private _slotSummary: Element | null = null;
   private _slotContent: Element | null = null;
@@ -22,7 +24,7 @@ export class Collapse extends ElementOpenAttr {
   }
 
   private get _container(): Element | null {
-    return this.getElement(`.${this._templateCls.clsNames.container}`);
+    return this.getElement(`.${this._templateCls.getClsNames().container}`);
   }
 
   constructor() {
@@ -45,7 +47,7 @@ export class Collapse extends ElementOpenAttr {
   private _clearContent() {
     const children = Array.from(this.children);
     children.forEach((child) => {
-      const isContainer = child.classList.contains(this._templateCls.clsNames.container);
+      const isContainer = child.classList.contains(this._templateCls.getClsNames().container);
       const slot = child.getAttribute("slot") || "";
       if (isContainer || ["content", "summary"].includes(slot)) {
         return

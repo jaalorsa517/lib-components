@@ -1,31 +1,29 @@
-import { Template } from "lib/shared/class/Template.cls";
-import { IMenuHamburguer } from "./IMenuHamburguer";
+import { MenuHamburguerType } from "./MenuHamburguer.type";
 import { MenuHamburguerEnum } from "./MenuHamburger.enum";
+import { ITemplate } from "lib/shared/interfaces/Template.interface";
 
-export class MenuHamburguerTemplate extends Template {
-  private _clsNames: IMenuHamburguer;
+export class MenuHamburguerTemplate implements ITemplate<MenuHamburguerType> {
+  private _clsNames: MenuHamburguerType;
   private _template: string;
   private _style: string;
   private _propTime: number = 600;
 
   constructor() {
-    super();
     this._clsNames = this._getClsNames();
     this._template = this._getTemplate();
     this._style = this._getStyle();
   }
-
-  get clsNames(): IMenuHamburguer {
+  getClsNames(): MenuHamburguerType {
     return this._clsNames;
   }
-  get template(): string {
+  getTemplate(): string {
     return this._template;
   }
-  get style(): string {
+  getStyle(): string {
     return this._style;
   }
 
-  private _getClsNames(): IMenuHamburguer {
+  private _getClsNames(): MenuHamburguerType {
     return {
       root: MenuHamburguerEnum.tag,
       container: `${MenuHamburguerEnum.tag}__container`,

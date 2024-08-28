@@ -16,16 +16,16 @@ export class JsonTransform extends ElementOpen {
   }
 
   private _init(): void {
-    this._btnClear = this.getElement(`.${this._templateCls.clsNames.btnClear}`) as HTMLButtonElement;
+    this._btnClear = this.getElement(`.${this._templateCls.getClsNames().btnClear}`) as HTMLButtonElement;
     if (this._btnClear) this._btnClear.addEventListener("click", this.onClear.bind(this));
 
-    this._btnCopy = this.getElement(`.${this._templateCls.clsNames.btnCopy}`) as HTMLButtonElement;
+    this._btnCopy = this.getElement(`.${this._templateCls.getClsNames().btnCopy}`) as HTMLButtonElement;
     if (this._btnCopy) this._btnCopy.addEventListener("click", this.onCopy.bind(this));
 
-    this._btnFormat = this.getElement(`.${this._templateCls.clsNames.btnFormat}`) as HTMLButtonElement;
+    this._btnFormat = this.getElement(`.${this._templateCls.getClsNames().btnFormat}`) as HTMLButtonElement;
     if (this._btnFormat) this._btnFormat.addEventListener("click", this.onFormat.bind(this));
 
-    this._textArea = this.getElement(`.${this._templateCls.clsNames.textArea}`) as HTMLTextAreaElement;
+    this._textArea = this.getElement(`.${this._templateCls.getClsNames().textArea}`) as HTMLTextAreaElement;
     if (this._textArea) {
       this._textArea.addEventListener("keydown", this.onKeyDown.bind(this));
       this._textArea.addEventListener("paste", this.onPaste.bind(this));
@@ -43,7 +43,7 @@ export class JsonTransform extends ElementOpen {
     if (this._textArea) {
       navigator.clipboard.writeText(this._textArea.value);
       const popup: HTMLDivElement = document.createElement("div");
-      popup.classList.add(this._templateCls.clsNames.popup);
+      popup.classList.add(this._templateCls.getClsNames().popup);
       popup.textContent = "¡copiado!";
       this._btnCopy?.appendChild(popup);
       setTimeout(() => {
@@ -131,13 +131,13 @@ export class JsonTransform extends ElementOpen {
       if (type === Validates.ERROR && !this._textArea.nextElementSibling) {
         const error = document.createElement("div");
         error.textContent = "JSON no válido";
-        error.classList.add(this._templateCls.clsNames.errorInput);
-        this._textArea.classList.add(this._templateCls.clsNames.textAreaError);
+        error.classList.add(this._templateCls.getClsNames().errorInput);
+        this._textArea.classList.add(this._templateCls.getClsNames().textAreaError);
         this._textArea.after(error);
         return;
       }
       if (type === Validates.VALIDATE && this._textArea.nextElementSibling) {
-        this._textArea.classList.remove(this._templateCls.clsNames.textAreaError);
+        this._textArea.classList.remove(this._templateCls.getClsNames().textAreaError);
         this._textArea.nextElementSibling.remove();
       }
     }

@@ -56,7 +56,7 @@ export class Toggle extends ElementAttr {
   }
   private _changeChecked(value: boolean) {
     const radio: HTMLInputElement | null = this.shadowDOM.querySelector(
-      `.${this._templateCls.clsNames.radio}`
+      `.${this._templateCls.getClsNames().radio}`
     );
     if (!radio) return;
     radio.checked = value || false;
@@ -65,7 +65,7 @@ export class Toggle extends ElementAttr {
   }
   private _changeLabel(label: string) {
     const labelEl: HTMLElement | null = this.shadowDOM.querySelector(
-      `.${this._templateCls.clsNames.label}`
+      `.${this._templateCls.getClsNames().label}`
     );
     if (labelEl) {
       labelEl.innerText = label;

@@ -34,19 +34,19 @@ export class Tooltip extends ElementAttr {
     if (this._text) {
       const tooltip: HTMLDivElement = document.createElement("div");
       tooltip.innerHTML = this._text;
-      tooltip.classList.add(`${this._templateCls.clsNames.tooltip}`);
-      this.getElement(`.${this._templateCls.clsNames.container}`)?.appendChild(tooltip);
+      tooltip.classList.add(`${this._templateCls.getClsNames().tooltip}`);
+      this.getElement(`.${this._templateCls.getClsNames().container}`)?.appendChild(tooltip);
       this._positionObject[this._startPosition](tooltip);
       setTimeout(() => {
-        tooltip.classList.add(`${this._templateCls.clsNames.tooltipInOut}`);
+        tooltip.classList.add(`${this._templateCls.getClsNames().tooltipInOut}`);
       }, 0);
     }
   }
   private _onMouseOut() {
     if (this._text) {
-      const tooltip: Element | null = this.getElement(`.${this._templateCls.clsNames.tooltip}`);
+      const tooltip: Element | null = this.getElement(`.${this._templateCls.getClsNames().tooltip}`);
       if (tooltip) {
-        this.getElement(`.${this._templateCls.clsNames.container}`)?.removeChild(tooltip);
+        this.getElement(`.${this._templateCls.getClsNames().container}`)?.removeChild(tooltip);
         this.removeAttribute("style");
       }
     }
@@ -59,13 +59,13 @@ export class Tooltip extends ElementAttr {
     const { isLimitXRight, width, sizeBefore, isLimitYBottom, isLimitYTop } =
       this._getBoundingClientRect(tooltip);
     if (isLimitXRight) {
-      tooltip.classList.add(`${this._templateCls.clsNames.tootipOeste}`);
+      tooltip.classList.add(`${this._templateCls.getClsNames().tootipOeste}`);
       this.style.setProperty("--left", `initial`);
       this.style.setProperty("--right", `${width + this._gap}px`);
       this.style.setProperty("--left-before", "initial");
       this.style.setProperty("--right-before", `-${sizeBefore * 2}px`);
     } else {
-      tooltip.classList.add(`${this._templateCls.clsNames.tooltipEste}`);
+      tooltip.classList.add(`${this._templateCls.getClsNames().tooltipEste}`);
       this.style.setProperty("--left", `${width + this._gap}px`);
       this.style.setProperty("--left-before", `-${sizeBefore * 2}px`);
     }
@@ -91,12 +91,12 @@ export class Tooltip extends ElementAttr {
       this._getBoundingClientRect(tooltip);
 
     if (isLimitYBottom) {
-      tooltip.classList.add(`${this._templateCls.clsNames.tooltipNorte}`);
+      tooltip.classList.add(`${this._templateCls.getClsNames().tooltipNorte}`);
       this.style.setProperty("--top", "initial");
       this.style.setProperty("--bottom", `${height + sizeBefore / 2}px`);
       this.style.setProperty("--bottom-before", `-${sizeBefore * 2}px`);
     } else {
-      tooltip.classList.add(`${this._templateCls.clsNames.tooltipSur}`);
+      tooltip.classList.add(`${this._templateCls.getClsNames().tooltipSur}`);
       this.style.setProperty("--top", `${height + sizeBefore / 2}px`);
     }
     if (isLimitXRight) {

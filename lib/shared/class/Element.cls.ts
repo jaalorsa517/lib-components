@@ -16,14 +16,14 @@ export abstract class Element extends BaseElement {
     if (cb) cb();
   }
 
-  protected render(cb: Function = () => {}) {
+  render(cb: Function = () => { }) {
     const hash = this.getAttribute(Attributes.hash);
     if (!hash) {
       this._renderComponent(cb);
     }
   }
 
-  protected get shadowDOM(): ShadowRoot {
+  get shadowDOM(): ShadowRoot {
     return this._shadow;
   }
 

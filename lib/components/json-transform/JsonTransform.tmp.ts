@@ -1,30 +1,28 @@
-import { Template } from "lib/shared/class/Template.cls";
-import { IJsonTransform } from "./IJsonTransform";
-import { JsonTransformEnum } from "./JsonTransform.enum";
+import { JsonTransformType } from "lib/components/json-transform/JsonTransform.type";
+import { JsonTransformEnum } from "lib/components/json-transform/JsonTransform.enum";
+import { ITemplate } from "lib/shared/interfaces/Template.interface";
 
-export class JsonTransformTemplate extends Template {
-  private _clsNames: IJsonTransform;
+export class JsonTransformTemplate implements ITemplate<JsonTransformType> {
+  private _clsNames: JsonTransformType;
   private _template: string;
   private _style: string;
 
   constructor() {
-    super();
     this._clsNames = this._getClsNames();
     this._template = this._getTemplate();
     this._style = this._getStyle();
   }
-
-  get clsNames(): IJsonTransform {
+  getClsNames(): JsonTransformType {
     return this._clsNames;
   }
-  get template(): string {
+  getTemplate(): string {
     return this._template;
   }
-  get style(): string {
+  getStyle(): string {
     return this._style;
   }
 
-  private _getClsNames(): IJsonTransform {
+  private _getClsNames(): JsonTransformType {
     return {
       root: JsonTransformEnum.tag,
       container: `${JsonTransformEnum.tag}__container`,
@@ -150,7 +148,7 @@ export class JsonTransformTemplate extends Template {
       .${this._clsNames.btn}:active {
         transform: scale(0.95);
       }
-      .${this.clsNames.popup}{
+      .${this._clsNames.popup}{
         padding: 0.3em;
         position: absolute;
         left: 50%;

@@ -1,31 +1,30 @@
-import { ToggleEnum } from "./Toggle.enum";
-import { IToggle } from "./IToggle";
-import { Template } from "lib/shared/class/Template.cls";
+import { ITemplate } from "lib/shared/interfaces/Template.interface";
+import { ToggleEnum } from "lib/components/toggle/Toggle.enum";
+import { ToggleType } from "lib/components/toggle/Toggle.type";
 
-export class ToggleTemplate extends Template {
+export class ToggleTemplate implements ITemplate<ToggleType> {
   private _label: string;
-  private _clsNames: IToggle;
+  private _clsNames: ToggleType;
   private _template: string;
   private _style: string;
 
   constructor(label: string) {
-    super();
     this._label = label;
     this._clsNames = this._getClsNames();
     this._template = this._getTemplate();
     this._style = this._getStyle();
   }
-  get clsNames(): IToggle {
+  getClsNames() {
     return this._clsNames;
   }
-  get template(): string {
+  getTemplate(): string {
     return this._template;
   }
-  get style(): string {
+  getStyle(): string {
     return this._style;
   }
 
-  private _getClsNames(): IToggle {
+  private _getClsNames(): ToggleType {
     return {
       root: ToggleEnum.tag,
       container: `${ToggleEnum.tag}__container`,
@@ -37,17 +36,17 @@ export class ToggleTemplate extends Template {
 
   private _getTemplate(): string {
     return `
-      <div class="${this.clsNames.container}">
-        <input class="${this.clsNames.radio}" type="radio" />
-        <div class="${this.clsNames.switch}"></div>
-        <span class="${this.clsNames.label}">${this._label}</span>
+      <div class="${this._clsNames.container}">
+        <input class="${this._clsNames.radio}" type="radio" />
+        <div class="${this._clsNames.switch}"></div>
+        <span class="${this._clsNames.label}">${this._label}</span>
       </div>
       `;
   }
 
   private _getStyle(): string {
     return `
-      ${this.clsNames.root},:host {
+      ${this._clsNames.root},:host {
           width: fit-content;
           display:block;
           font-size: 10px;
@@ -63,16 +62,16 @@ export class ToggleTemplate extends Template {
           --labelFont: sans-serif;
           --borderRadius: 10em;
         }
-        .${this.clsNames.container}{
+        .${this._clsNames.container}{
           display: flex;
           align-items: center;
           margin: .5em 0;
           }
-        .${this.clsNames.radio} {
+        .${this._clsNames.radio} {
           appearance: none;
           position: absolute;
         }
-        .${this.clsNames.switch} {
+        .${this._clsNames.switch} {
           order:1;
           height: var(--backHeight);
           width: var(--backWidth);
@@ -82,14 +81,14 @@ export class ToggleTemplate extends Template {
           border-radius: var(--borderRadius);
           transition: background-color 0.3s ease-in-out;
         }
-        .${this.clsNames.radio}:not(:checked) ~ .${this.clsNames.switch} {
+        .${this._clsNames.radio}:not(:checked) ~ .${this._clsNames.switch} {
           background-color: var(--backColorInactive);
         }
-        .${this.clsNames.radio}:checked ~ .${this.clsNames.switch} {
+        .${this._clsNames.radio}:checked ~ .${this._clsNames.switch} {
           background-color: var(--backColorActive);
         }
 
-        .${this.clsNames.switch}::before {
+        .${this._clsNames.switch}::before {
           content: "";
           height: var(--swSize);
           width: var(--swSize);
@@ -100,13 +99,13 @@ export class ToggleTemplate extends Template {
           border-radius: 100%;
           transition: left 0.3s ease-in-out;
         }
-        .${this.clsNames.radio}:not(:checked) ~ .${this.clsNames.switch}::before {
+        .${this._clsNames.radio}:not(:checked) ~ .${this._clsNames.switch}::before {
           left: 2%;
         }
-        .${this.clsNames.radio}:checked ~ .${this.clsNames.switch}::before {
+        .${this._clsNames.radio}:checked ~ .${this._clsNames.switch}::before {
           left: 50%;
         }
-        .${this.clsNames.label}{
+        .${this._clsNames.label}{
           order: 2;
           font-family: var(--labelFont);
           font-size: var(--labelSize);
