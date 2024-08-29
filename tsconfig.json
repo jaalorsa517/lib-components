@@ -8,15 +8,24 @@
     "esModuleInterop": true,
     "noImplicitReturns": true,
     "declaration": true,
-    "lib": ["esnext", "dom", "dom.iterable"],
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable"
+    ],
     "skipLibCheck": true,
-    "types": ["vite/client"],
+    "types": [
+      "vite/client"
+    ],
     "baseUrl": "./",
     "paths": {
-      "@/lib/*": ["./lib"],
-      "@/test/*": ["./test"]
+      "@/lib/*": [
+        "lib/."
+      ],
+      "@/test/*": [
+        "test/."
+      ]
     },
-    
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -24,13 +33,18 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-    
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["lib"],
-  "exclude": ["dev", "test"]
+  "include": [
+    "lib"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
 }
