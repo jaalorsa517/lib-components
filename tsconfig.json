@@ -31,5 +31,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["lib","test"]
+  "include": ["lib"],
+  "exclude": ["dev", "test"]
 }
