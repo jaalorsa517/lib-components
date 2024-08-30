@@ -1,28 +1,52 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "useDefineForClassFields": true,
     "module": "ESNext",
-    "lib": ["ESNext", "DOM"],
-    "moduleResolution": "Node",
-    "strict": true,
+    "useDefineForClassFields": true,
+    "skipDefaultLibCheck": true,
     "sourceMap": true,
+    "esModuleInterop": true,
+    "noImplicitReturns": true,
+    "declaration": true,
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable"
+    ],
+    "skipLibCheck": true,
+    "types": [
+      "vite/client"
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "@/lib/*": [
+        "lib"
+      ],
+      "@/test/*": [
+        "test"
+      ]
+    },
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "esModuleInterop": true,
     "noEmit": true,
+    "jsx": "preserve",
+    /* Linting */
+    "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "skipLibCheck": true,
-    "declaration": true,
-    "outDir": "dist",
-    "types": ["vite/client"],
-    "baseUrl": ".",
-    "paths": {
-      "@/lib/*": ["./lib"],
-      "@/test/*": ["./test"]
-    }
+    "noFallthroughCasesInSwitch": true
   },
-  "include": ["lib","test"]
+  "include": [
+    "lib/**/*",
+    "test/**/*",
+    "dev/**/*",
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
 }

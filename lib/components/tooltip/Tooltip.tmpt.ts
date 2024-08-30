@@ -1,18 +1,28 @@
-import { TooltipEnum } from "./Tooltip.enum";
-import { ITooltip } from "./ITooltip";
-import { Template } from "lib/shared/class/Template.cls";
+import { ITemplate } from "lib/shared/interfaces/Template.interface";
+import { TooltipEnum } from "lib/components/tooltip/Tooltip.enum";
+import { TooltipType } from "lib/components/tooltip/Tooltip.type";
 
-export class TooltipTemplate extends Template {
-  private _clsNames: ITooltip;
+export class TooltipTemplate implements ITemplate<TooltipType> {
+  private _clsNames: TooltipType;
   private _template: string;
   private _style: string;
 
   constructor() {
-    super();
     this._clsNames = this._getClassNames();
     this._template = this._getTemplate();
     this._style = this._getStyle();
   }
+
+  getClsNames(): TooltipType {
+    return this._clsNames;
+  }
+  getTemplate(): string {
+    return this._template;
+  }
+  getStyle(): string {
+    return this._style;
+  }
+
   private _getClassNames() {
     return {
       root: TooltipEnum.tag,
@@ -34,7 +44,7 @@ export class TooltipTemplate extends Template {
   }
   private _getStyle() {
     return `
-      ${this.clsNames.root},:host {
+      ${this._clsNames.root},:host {
         width: fit-content;
         height: fit-content;
         display:block;
@@ -61,10 +71,10 @@ export class TooltipTemplate extends Template {
         --fontColor: #fff;
         --text-align: start;
       }
-      .${this.clsNames.container} {
+      .${this._clsNames.container} {
         position: relative;
       }
-      .${this.clsNames.tooltip}{
+      .${this._clsNames.tooltip}{
         width: var(--width);
         height: var(--height);
         max-width: var(--max-width);
@@ -87,10 +97,10 @@ export class TooltipTemplate extends Template {
         transition: opacity .3s ease-in-out;
         overflow-wrap: normal;
       }
-      .${this.clsNames.tooltip}.${this.clsNames.tooltipInOut}{
+      .${this._clsNames.tooltip}.${this._clsNames.tooltipInOut}{
         opacity: 1;
       }
-      .${this.clsNames.tooltip}::before{
+      .${this._clsNames.tooltip}::before{
         content: "";
         position: absolute;
         left: var(--left-before);
@@ -100,40 +110,30 @@ export class TooltipTemplate extends Template {
         border-style: solid;
         border-width: var(--border-width);
       }
-      .${this.clsNames.tooltipNorte}::before {
+      .${this._clsNames.tooltipNorte}::before {
         border-bottom-color: var(--border-transparent);
         border-top-color: var(--background-color);
         border-left-color: var(--border-transparent);
         border-right-color: var(--border-transparent);
       }
-      .${this.clsNames.tooltipEste}::before {
+      .${this._clsNames.tooltipEste}::before {
         border-bottom-color: var(--border-transparent);
         border-right-color: var(--background-color);
         border-top-color: var(--border-transparent);
         border-left-color: var(--border-transparent);
       }
-      .${this.clsNames.tooltipSur}::before {
+      .${this._clsNames.tooltipSur}::before {
         border-top-color: var(--border-transparent);
         border-bottom-color: var(--background-color);
         border-left-color: var(--border-transparent);
         border-right-color: var(--border-transparent);
       }
-      .${this.clsNames.tootipOeste}::before {
+      .${this._clsNames.tootipOeste}::before {
         border-top-color: var(--border-transparent);
         border-left-color: var(--background-color);
         border-bottom-color: var(--border-transparent);
         border-right-color: var(--border-transparent);
       }
       `;
-  }
-
-  get clsNames() {
-    return this._clsNames;
-  }
-  get template() {
-    return this._template;
-  }
-  get style() {
-    return this._style;
   }
 }

@@ -1,30 +1,29 @@
 import { CarouselEnum } from "lib/components/carousel/Carousel.enum";
-import { ICarousel } from "lib/components/carousel/ICarousel";
-import { Template } from "lib/shared/class/Template.cls";
+import { ITemplate } from "lib/shared/interfaces/Template.interface";
+import { CarouselType } from "lib/components/carousel/Carousel.type";
 
-export class CarouselTemplate extends Template {
-  private _clsNames: ICarousel;
+export class CarouselTemplate implements ITemplate<CarouselType> {
+  private _clsNames: CarouselType;
   private _template: string;
   private _style: string;
 
   constructor() {
-    super();
     this._clsNames = this._getClsNames();
     this._template = this._getTemplate();
     this._style = this._getStyle();
   }
 
-  get clsNames(): ICarousel {
+  getClsNames(): CarouselType {
     return this._clsNames;
   }
-  get template(): string {
+  getTemplate(): string {
     return this._template;
   }
-  get style(): string {
+  getStyle(): string {
     return this._style;
   }
 
-  private _getClsNames(): ICarousel {
+  private _getClsNames(): CarouselType {
     return {
       root: `${CarouselEnum.tag}`,
       container: `${CarouselEnum.tag}__container`,

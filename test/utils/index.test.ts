@@ -131,8 +131,8 @@ describe("[Utilidades] funciones renderDom", () => {
     const dom = {
       shadowDOM: document.createElement("div"),
       _templateCls: {
-        style: "body { color: red; }",
-        template: "<div>Hello World</div>",
+        getStyle: vi.fn().mockReturnValueOnce("body { color: red; }"),
+        getTemplate: vi.fn().mockReturnValueOnce("<div>Hello World</d7iv>"),
       },
       setAttribute: vi.fn(),
     };
@@ -152,8 +152,8 @@ describe("[Utilidades] funciones renderDom", () => {
   it("Render DOM open", () => {
     const dom = {
       _templateCls: {
-        style: "body { color: red; }",
-        template: "<div>Hello World</div>",
+        getStyle: vi.fn().mockReturnValueOnce("body { color: red; }"),
+        getTemplate: vi.fn().mockReturnValueOnce("<div>Hello World</div>"),
       },
       append: vi.fn(),
       setAttribute: vi.fn(),

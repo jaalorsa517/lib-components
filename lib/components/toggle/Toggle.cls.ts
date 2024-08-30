@@ -3,13 +3,15 @@ import { ElementAttr } from "lib/shared/class/Element.cls";
 import { getType } from "lib/shared/utils";
 import { Types } from "lib/shared/enums";
 import { ISwitchObject } from "lib/shared/interfaces";
+import { ITemplate } from "lib/shared/interfaces/Template.interface";
+import { ToggleType } from "lib/components/toggle/Toggle.type";
+import { ToggleService } from "lib/components/toggle/Toggle.services";
 
 export class Toggle extends ElementAttr {
-  private _checked: boolean;
   private _eventEmitter: CustomEvent;
-  private _templateCls: ToggleTemplate;
-  private _labelOptions: string[] = [];
-  protected _attrs: ISwitchObject;
+  private _templateCls: ITemplate<ToggleType>;
+  private _toggleService: ToggleService;
+  public _attrs: ISwitchObject;
 
   static get observedAttributes() {
     return ["checked", "label", "*"];
@@ -17,88 +19,38 @@ export class Toggle extends ElementAttr {
 
   constructor() {
     super();
-    this._labelOptions = this._getOptionsLabel();
-    this._checked = getType(
+    const label = ToggleService.getOptionsLabel(this);
+    const checked = getType(
       this.getAttribute("checked") || "false",
       Types.BOOLEAN,
       this.shadowDOM
     );
-    this._templateCls = new ToggleTemplate(this._getLabel);
-    this._attrs = this._getLogicAttr();
+    this._templateCls = new ToggleTemplate(label[checked]);
     this._eventEmitter = new CustomEvent("change", {
-      detail: { isChecked: this._checked },
+      detail: { isChecked: checked },
     });
+    this._toggleService = new ToggleService({
+      elementAttr: this,
+      template: this._templateCls,
+      eventEmitter: this._eventEmitter,
+      getType,
+    })
+    this._attrs = this._getLogicAttr();
+    this._toggleService.attrs = this._attrs;
   }
+
   private _getLogicAttr(): ISwitchObject {
     return {
-      checked: (newValue: string) =>
-        this._changeChecked(getType(newValue, Types.BOOLEAN, this.shadowDOM)),
-      label: (newValue: string) => this._attrLabel(newValue),
+      checked: this._toggleService.checkedAttr.bind(this._toggleService),
+      label: this._toggleService.labelAttr.bind(this._toggleService),
     };
-  }
-  private onClick = (e: MouseEvent) => {
-    e.preventDefault();
-    this._checked = !getType(
-      this.getAttribute("checked") || "false",
-      Types.BOOLEAN,
-      this.shadowDOM
-    );
-    this.setAttribute("checked", `${this._checked}`);
-    this.setAttribute("label", this._getLabel);
-    this._eventEmitter.detail.isChecked = this._checked;
-    this.dispatchEvent(this._eventEmitter);
-  };
-  private _getOptionsLabel(): string[] {
-    const _label: string = this.getAttribute("label") || "";
-    const labelOptions: string[] = _label.split("/").slice(0, 2);
-    if (labelOptions.length === 1) labelOptions.push(_label);
-    return labelOptions;
-  }
-  private _changeChecked(value: boolean) {
-    const radio: HTMLInputElement | null = this.shadowDOM.querySelector(
-      `.${this._templateCls.clsNames.radio}`
-    );
-    if (!radio) return;
-    radio.checked = value || false;
-    this._checked = value || false;
-    this._attrs.label(this._getLabel);
-  }
-  private _changeLabel(label: string) {
-    const labelEl: HTMLElement | null = this.shadowDOM.querySelector(
-      `.${this._templateCls.clsNames.label}`
-    );
-    if (labelEl) {
-      labelEl.innerText = label;
-    }
-  }
-  private _attrLabel(newValue: string) {
-    const hasElements: boolean = newValue?.split("/").length === 2 || false;
-    if (
-      hasElements &&
-      (this._labelOptions.length !== 2 ||
-        !this._labelOptions.every((value) => value))
-    )
-      this._labelOptions = this._getOptionsLabel();
-    this._changeLabel(hasElements ? this._getLabel : newValue || "");
-  }
-  private get _getLabel(): string {
-    return this._labelOptions[+this._checked];
   }
 
   connectedCallback() {
-    this.render(() => {
-      this._checked = getType(
-        this.getAttribute("checked") || "false",
-        Types.BOOLEAN,
-        this.shadowDOM
-      );
-      this._changeChecked(this._checked);
-      this._eventEmitter.detail.isChecked = this._checked;
-      this.dispatchEvent(this._eventEmitter);
-    });
-    this.addEventListener("click", this.onClick, false);
+    this._toggleService.connectedCallback();
   }
+
   disconnectedCallback() {
-    this.removeEventListener("click", this.onClick);
+    this._toggleService.disconnectedCallback();
   }
 }

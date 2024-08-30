@@ -1,30 +1,29 @@
-import { Template } from "lib/shared/class/Template.cls";
-import { ICollapse } from "./ICollapse";
-import { CollapseEnum } from "./Collapse.enum";
+import { CollapseEnum } from "lib/components/collapse/Collapse.enum";
+import { ITemplate } from "lib/shared/interfaces/Template.interface";
+import { CollapseType } from "lib/components/collapse/Collapse.type";
+import { ClassNames } from "lib/shared/types";
 
-export class CollapseTemplate extends Template {
-  private _clsNames: ICollapse;
+export class CollapseTemplate implements ITemplate<CollapseType> {
+  private _clsNames: CollapseType;
   private _template: string;
   private _style: string;
 
   constructor() {
-    super();
     this._clsNames = this._getClsNames();
     this._template = this._getTemplate();
     this._style = this._getStyle();
   }
-
-  get clsNames(): ICollapse {
+  getClsNames(): ClassNames {
     return this._clsNames;
   }
-  get template(): string {
+  getTemplate(): string {
     return this._template;
   }
-  get style(): string {
+  getStyle(): string {
     return this._style;
   }
 
-  private _getClsNames(): ICollapse {
+  private _getClsNames(): CollapseType {
     return {
       root: CollapseEnum.tag,
       container: `${CollapseEnum.tag}__container`,
