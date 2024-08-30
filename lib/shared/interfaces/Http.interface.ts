@@ -1,21 +1,21 @@
 import { HttpBody, HttpHeader } from "lib/shared/models/Http.model";
 
-export interface IHttpGet {
+export interface J5HttpGetI {
   get(url: string, headers?: HttpHeader): Promise<any>;
 }
 
-export interface IHttpDelete {
+export interface J5HttpDeleteI {
   delete(url: string, headers?: HttpHeader): Promise<any>;
 }
 
-export interface IHttpPost {
+export interface J5HttpPostI {
   post(url: string, body?: HttpBody, headers?: HttpHeader): Promise<any>;
 }
 
-export interface IHttpPut {
+export interface J5HttpPutI {
   put(url: string, body?: HttpBody, headers?: HttpHeader): Promise<any>;
 }
 
-export interface IHttpPatch {
+export interface J5HttpPatchI {
   patch(url: string, body?: HttpBody, headers?: HttpHeader): Promise<any>;
 } 

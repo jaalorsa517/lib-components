@@ -1,7 +1,7 @@
-import { IHttpDelete, IHttpGet, IHttpPatch, IHttpPost, IHttpPut } from "lib/shared/interfaces/Http.interface";
+import { J5HttpDeleteI, J5HttpGetI, J5HttpPatchI, J5HttpPostI, J5HttpPutI } from "lib/shared/interfaces/Http.interface";
 import { HttpBody, HttpHeader } from "lib/shared/models/Http.model";
 
-export class HttpClient implements IHttpGet, IHttpDelete, IHttpPost, IHttpPut, IHttpPatch {
+export class J5HttpClient implements J5HttpGetI, J5HttpDeleteI, J5HttpPostI, J5HttpPutI, J5HttpPatchI {
   constructor(private windows: Window) { }
 
   async get(url: string, headers: HttpHeader = {}): Promise<any> {

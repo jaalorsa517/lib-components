@@ -5,11 +5,11 @@ import { j5MenuHamburguer } from "lib/components/menu-hamburguer";
 import { j5Toggle } from "lib/components/toggle";
 import { j5Tooltip } from "lib/components/tooltip";
 
-import { HttpClient } from "lib/services/HttpClient.service";
+import { J5HttpClient } from "lib/services/HttpClient.service";
 
 import { HttpHeader, HttpBody } from "lib/shared/models/Http.model"
-import { IHttpDelete, IHttpGet, IHttpPatch, IHttpPost, IHttpPut } from "lib/shared/interfaces/Http.interface"
+import { J5HttpDeleteI, J5HttpGetI, J5HttpPatchI, J5HttpPostI, J5HttpPutI } from "lib/shared/interfaces/Http.interface"
 
-export { j5Carousel, j5Collapse, j5JsonTransform, j5MenuHamburguer, j5Toggle, j5Tooltip, HttpClient };
+export { j5Carousel, j5Collapse, j5JsonTransform, j5MenuHamburguer, j5Toggle, j5Tooltip, J5HttpClient };
 
-export type { HttpHeader, HttpBody, IHttpDelete, IHttpGet, IHttpPatch, IHttpPost, IHttpPut }
+export type { HttpHeader, HttpBody, J5HttpDeleteI, J5HttpGetI, J5HttpPatchI, J5HttpPostI, J5HttpPutI }
