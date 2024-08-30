@@ -40,7 +40,9 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "lib/**/*", "test/**/*"
+    "lib/**/*",
+    "test/**/*",
+    "dev/**/*",
   ],
   "references": [
     {

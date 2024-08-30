@@ -1,4 +1,5 @@
-![Static Badge](https://img.shields.io/badge/license-MIT-blue?style=plastic) [![deploy](https://github.com/jaalorsa517/j5-components/actions/workflows/deploy-npm.yml/badge.svg?branch=main)](https://github.com/jaalorsa517/j5-components/actions/workflows/deploy-npm.yml)
+![Static Badge](https://img.shields.io/badge/license-MIT-blue?style=plastic) [![deploy](https://github.com/jaalorsa517/j5-components/actions/workflows/deploy-npm.yml/badge.svg?branch=main)](https://github.com/jaalorsa517/j5-components/actions/workflows/deploy-npm.yml) [![Unit Test](https://github.com/jaalorsa517/j5-components/actions/workflows/unit-test.yml/badge.svg)](https://github.com/jaalorsa517/j5-components/actions/workflows/unit-test.yml)
+
 # J5-Components: Librería web components
 
 ## Descripción
@@ -663,3 +664,36 @@ Transición tooltip: `j5-tooltip__tooltip--in-out`,
   ```
 
 </details>
+
+## Servicios
+
+### J5HttpClient
+
+Es un servicio de JavaScript que utiliza el cliente **HTTP** para realizar solicitudes AJAX. Este servicio permite consumir APIs RESTful.
+Recibe como parámetro el objeto window del navegador. Esto se debe a que, internamente, usa el window.fetch.
+
+El servicio tiene disponible los métodos **GET**, **POST**, **PUT**, **PATCH** y **DELETE**. También dispone del tipo **J5HttpHeader** y **J5HttpBody** usados para la petición. Y dispone de las interfaces **J5HttpGetI**, **J5HttpPostI**, **J5HttpPutI**, **J5HttpPatchI**, **J5HttpDeleteI**.
+
+```javascript
+// Importar la librería y seleccionar j5HttpClient
+import { J5HttpBody, J5HttpClient, J5HttpHeader } from "@jaalorsa/j5-components";
+const httpClient = new J5HttpClient(window);
+
+const headers:J5HttpHeader = {
+  "Content-Type": "application/json",
+  "Accept": "application/json",}
+
+const boyd: J5HttpBody={
+  name: "John",
+  age: 30,
+  city: "New York"
+}
+
+const httpClient = new J5HttpClient(window)
+
+httpClient.get("https://testurl.com", headers)
+httpClient.post("https://testurl.com", boyd, headers)
+httpClient.put("https://testurl.com", boyd, headers)
+httpClient.patch("https://testurl.com", boyd, headers)
+httpClient.delete("https://testurl.com", headers)
+```
