@@ -4,7 +4,6 @@ import { CarouselTemplate } from "lib/components/carousel/Carousel.tmp";
 import { CarouselType } from "lib/components/carousel/Carousel.type";
 import { ITemplate } from "lib/shared/interfaces/Template.interface";
 
-
 describe("CarouselService", () => {
   const template: ITemplate<CarouselType> = new CarouselTemplate()
 

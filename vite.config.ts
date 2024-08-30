@@ -18,8 +18,15 @@ export default defineConfig({
       test: path.resolve(__dirname, "test"),
     },
   },
-  plugins: [vite_d_ts()],
+  plugins: [vite_d_ts({
+    tsconfigPath: "tsconfig.build.json",
+    copyDtsFiles: true,
+  })],
   test: {
+    typecheck: {
+      enabled: true,
+      tsconfig: path.resolve(__dirname, "tsconfig.test.json"),
+    },
     environment: "jsdom",
     coverage: {
       provider: "v8",
