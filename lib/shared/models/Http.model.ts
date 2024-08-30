@@ -1,3 +1,3 @@
-export type HttpHeader = { [key: string]: string }
+export type J5HttpHeader = { [key: string]: string }
 
-export type HttpBody = Object | string
+export type J5HttpBody = Object | string
