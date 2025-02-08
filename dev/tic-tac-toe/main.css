@@ -1,0 +1,101 @@
+main {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: 15px;
+  padding: 2rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+
+j5-tic-tac-toe {
+  --color-cell-winner: #438c40;
+  --color-cell-font-winner: #dfeedc;
+  --color-cell-background: #fff;
+  --color-border: #ccc;
+  --color-cell-font: #252525;
+  --color-reset: #f44336;
+  --color-reset-hover: #d32f2f;
+  --cell-gap: 8px;
+}
+
+.ticTacToe {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.ticTacToe__controls {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.ticTacToe__modeControls,
+.ticTacToe__levelControls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ticTacToe__buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.ticTacToe__button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: var(--color-secondary, #e0e0e0);
+  color: var(--color-text, #252525);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.ticTacToe__button:hover {
+  opacity: 0.9;
+}
+
+.ticTacToe__button--active {
+  background-color: var(--color-primary, #4CAF50);
+  color: white;
+}
+
+.ticTacToe__button--active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-primary, #4CAF50);
+  border-radius: 50%;
+  animation: blink 1s infinite;
+}
+
+.ticTacToe__levelControls {
+  display: none;
+}
+
+.ticTacToe__levelControls--visible {
+  display: flex;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}

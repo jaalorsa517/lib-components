@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" sizes="16x16 32x32 64x64" href="../../favicon.png" />
+    <link rel="stylesheet" href="./main.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Triqui | Librerías [Development]</title>
+  </head>
+  <body>
+    <script type="module" src="./main.js"></script>
+    <main id="main">
+      <div class="container">
+        <h1>Juego de Triqui</h1>
+        <div class="ticTacToe">
+          <div class="ticTacToe__controls">
+            <div class="ticTacToe__modeControls">
+              <h3>Modo de juego</h3>
+              <div class="ticTacToe__buttons">
+                <button class="ticTacToe__button" data-mode="human">
+                  Humano vs Humano
+                </button>
+                <button class="ticTacToe__button ticTacToe__button--active" data-mode="cpu">
+                  Jugar vs CPU
+                </button>
+              </div>
+            </div>
+            <div class="ticTacToe__levelControls">
+              <h3>Nivel de dificultad</h3>
+              <div class="ticTacToe__buttons">
+                <button class="ticTacToe__button ticTacToe__button--active" data-level="easy">
+                  Fácil
+                </button>
+                <button class="ticTacToe__button" data-level="medium">
+                  Medio
+                </button>
+                <button class="ticTacToe__button" data-level="hard">
+                  Difícil
+                </button>
+              </div>
+            </div>
+          </div>
+          <j5-tic-tac-toe mode="cpu" level="easy"></j5-tic-tac-toe>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

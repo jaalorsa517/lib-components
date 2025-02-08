@@ -13,6 +13,7 @@ export function header() {
       <li><a href="/dev/carousel/index.html">Carousel</a></li>
       <li><a href="/dev/collapse/index.html">Collapse</a></li>
       <li><a href="/dev/jsontransformer/index.html">JsonTransform</a></li>
+      <li><a href="/dev/tic-tac-toe/index.html">Triqui</a></li>
       <li><a href="/dev/toggle/index.html">Toggle</a></li>
       <li><a href="/dev/tooltip/index.html">Tooltip</a></li>
     </j5-menu-hamburguer>`;

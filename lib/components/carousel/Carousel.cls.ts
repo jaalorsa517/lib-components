@@ -4,8 +4,8 @@ import { ISwitchObject } from "lib/shared/interfaces";
 import { CarouselService } from "lib/components/carousel/Carousel.services";
 
 export class Carousel extends ElementAttr {
-  private _templateCls: CarouselTemplate;
-  private _carouselService: CarouselService;
+  private readonly _templateCls: CarouselTemplate;
+  private readonly _carouselService: CarouselService;
   protected _attrs: ISwitchObject;
 
   static get observedAttributes() {

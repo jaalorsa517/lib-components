@@ -4,7 +4,7 @@ import { ISwitchObject } from "lib/shared/interfaces";
 import { renderDom } from "lib/shared/utils";
 
 export abstract class Element extends BaseElement {
-  private _shadow: ShadowRoot;
+  private readonly _shadow: ShadowRoot;
 
   constructor() {
     super();

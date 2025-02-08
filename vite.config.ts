@@ -50,7 +50,7 @@ export default defineConfig({
         "lib/shared/types/**/*",
         "lib/shared/models/**/*"
       ],
-      reporter: ["json-summary", "html"],
+      reporter: ["json-summary", "html", "text"],
     },
   }
 });
