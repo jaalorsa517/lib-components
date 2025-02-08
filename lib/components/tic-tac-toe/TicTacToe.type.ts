@@ -3,6 +3,7 @@ import { TicTacToeTemplate } from "./TicTacToe.tmp";
 import { Player, GameLevel, GameMode } from "./TicTacToe.enum";
 
 export type { Player };
+export type { GameMode}
 export type { GameLevel };
 export type Cell = {
   cell: Player | null;
