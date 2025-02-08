@@ -665,6 +665,78 @@ Transición tooltip: `j5-tooltip__tooltip--in-out`,
 
 </details>
 
+<details class="detail">
+<summary><strong> j5-tic-tac-toe: Juego de Tres en Raya </strong> </summary>
+
+#### Instrucciones
+
+En el html se usa la etiqueta `j5-tic-tac-toe`. Este componente usa Shadow Dom, por lo tanto, cuando se requiera modificar estilos, se hacen a través de las variables de CSS.
+
+```html
+<j5-tic-tac-toe></j5-tic-tac-toe>
+```
+
+En el archivo de entrada Js se importa la librería y se ejecuta la función **j5TicTacToe**.
+
+```javascript
+// main.js
+import { j5TicTacToe } from "@jaalorsa/j5-components";
+j5TicTacToe();
+```
+
+Se puede insertar el componente desde javascript:
+
+```javascript
+const ticTacToe = document.createElement("j5-tic-tac-toe");
+ticTacToe.setAttribute("game-mode", "cpu");
+ticTacToe.setAttribute("game-level", "medium");
+document.body.appendChild(ticTacToe);
+```
+
+#### Atributos
+
+- **game-mode [string = cpu | human]:** Define el modo de juego. Por defecto es `cpu`.
+  - `cpu`: Jugar contra la computadora
+  - `human`: Jugar contra otro jugador
+  ```html
+  <j5-tic-tac-toe game-mode="cpu"></j5-tic-tac-toe>
+  ```
+
+- **game-level [string = easy | medium | hard]:** Define el nivel de dificultad cuando se juega contra la computadora. Por defecto es `medium`.
+  ```html
+  <j5-tic-tac-toe game-mode="cpu" game-level="hard"></j5-tic-tac-toe>
+  ```
+
+#### Nombre de las clases de los elementos internos
+
+```javascript
+Componente: `j5-tic-tac-toe`,
+Contenedor: `j5-tic-tac-toe__container`,
+Tablero: `j5-tic-tac-toe__board`,
+Celda: `j5-tic-tac-toe__cell`,
+Puntuación: `j5-tic-tac-toe__score`,
+ElementoPuntuación: `j5-tic-tac-toe__scoreItem`,
+BotónReinicio: `j5-tic-tac-toe__reset`
+```
+
+#### Variables CSS disponibles
+
+```css
+j5-tic-tac-toe {
+  --color-cell-winner: #438c40;
+  --color-cell-font-winner: #dfeedc;
+  --color-cell-background: #fff;
+  --color-border: #ccc;
+  --color-cell-font: #252525;
+  --color-reset: #f44336;
+  --color-reset-hover: #d32f2f;
+  --cell-gap: 8px;
+  display: block;
+}
+```
+
+</details>
+
 ## Servicios
 
 ### J5HttpClient

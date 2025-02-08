@@ -64,6 +64,18 @@ export class TicTacToeTemplate implements ITemplate<TicTacToeTemplateType> {
   private _getStyle(): string {
     const cls = this._clsNames;
     return `
+      .${cls.root}, :host{
+        --color-cell-winner: #438c40;
+        --color-cell-font-winner: #dfeedc;
+        --color-cell-background: #fff;
+        --color-border: #ccc;
+        --color-cell-font: #252525;
+        --color-reset: #f44336;
+        --color-reset-hover: #d32f2f;
+        --cell-gap: 8px;
+        display: block;
+      }
+
       .${cls.container} {
         display: flex;
         flex-direction: column;
